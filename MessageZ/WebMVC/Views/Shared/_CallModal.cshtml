@@ -1,0 +1,137 @@
+<!-- ═══════════════════════════════════════
+     SHARED CALL OVERLAY (Audio & Video)
+═══════════════════════════════════════ -->
+<div id="callOverlay" class="call-overlay d-none">
+    <!-- Call Header Bar -->
+    <div class="call-header-bar">
+        <div class="d-flex align-items-center gap-3">
+            <div id="callHeaderAvatar" class="c-avatar" style="width:40px;height:40px;font-size:0.88rem;">#</div>
+            <div>
+                <div id="callPartnerName" class="call-partner-name">User</div>
+                <div id="callStatusBadge" class="call-status-badge">Calling…</div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button id="btnMinimizeCall" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1 d-flex align-items-center gap-1" style="font-size:0.75rem; opacity:0.9;" type="button" title="Minimize to Dynamic Island">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="4 14 10 14 10 20"></polyline>
+                    <polyline points="20 10 14 10 14 4"></polyline>
+                    <line x1="14" y1="10" x2="21" y2="3"></line>
+                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                </svg>
+                <span>Chat</span>
+            </button>
+            <div id="callTimer" class="call-timer-pill d-none">00:00</div>
+        </div>
+    </div>
+
+    <!-- Active Call Body -->
+    <div class="call-body-area">
+        <!-- 1. Video Call View -->
+        <div id="videoCallArea" class="video-call-box d-none">
+            <video id="remoteVideo" autoplay playsinline class="remote-video"></video>
+            <div id="localVideoContainer" class="local-video-pip">
+                <video id="localVideo" autoplay muted playsinline></video>
+                <div id="localCamOffNotice" class="cam-off-notice d-none">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h7"/><path d="m2 2 20 20"/><path d="m22 7-6 5 6 5V7z"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Audio Call View -->
+        <div id="audioCallArea" class="audio-call-box">
+            <div class="audio-avatar-wrapper">
+                <div class="audio-pulse-ring ring-1"></div>
+                <div class="audio-pulse-ring ring-2"></div>
+                <div id="audioCallAvatar" class="audio-call-avatar">#</div>
+            </div>
+            <h4 id="audioPartnerName" class="mt-4 mb-1 fw-bold text-white fs-5">User</h4>
+            <p id="audioCallSub" class="text-white-50 small mb-0">Audio call in progress</p>
+        </div>
+    </div>
+
+    <!-- Call Control Dock -->
+    <div class="call-control-dock">
+        <!-- Toggle Mic -->
+        <button id="btnToggleMic" class="call-action-btn" type="button" title="Mute/Unmute Mic">
+            <svg id="iconMicOn" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            <svg id="iconMicOff" class="d-none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+
+        <!-- Toggle Camera (Video call only) -->
+        <button id="btnToggleCam" class="call-action-btn" type="button" title="Turn Camera On/Off">
+            <svg id="iconCamOn" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            <svg id="iconCamOff" class="d-none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h7"/><path d="m2 2 20 20"/><path d="m22 7-6 5 6 5V7z"/></svg>
+        </button>
+
+        <!-- End Call -->
+        <button id="btnEndCall" class="call-action-btn call-hangup-btn" type="button" title="End call">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.42 19.42 0 0 1 4.89 12 19.79 19.79 0 0 1 1.93 3.62 2 2 0 0 1 3.91 1.45h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91M23 1 1 23"/></svg>
+        </button>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DYNAMIC ISLAND CALL CAPSULE
+═══════════════════════════════════════ -->
+<div id="callDynamicIsland" class="dynamic-island-capsule d-none" title="Click to expand call">
+    <div class="island-content">
+        <!-- Left: Avatar + Animated Live Pulse -->
+        <div class="island-left">
+            <div id="islandPartnerAvatar" class="island-avatar">#</div>
+            <div class="island-pulse-dot"></div>
+        </div>
+
+        <!-- Center: Name + Timer + Sound Bars -->
+        <div class="island-center">
+            <div class="island-title-row">
+                <span id="islandPartnerName" class="island-name">User</span>
+                <span id="islandCallTypeIcon" class="island-type-icon">📞</span>
+            </div>
+            <div class="island-status-row">
+                <span id="islandTimer" class="island-timer">00:00</span>
+                <span class="island-sound-bars">
+                    <span></span><span></span><span></span><span></span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Right: Quick Controls -->
+        <div class="island-right" onclick="event.stopPropagation();">
+            <!-- Quick Mic Toggle -->
+            <button id="btnIslandToggleMic" class="island-btn mic" type="button" title="Mute/Unmute Mic">
+                <svg id="iconIslandMicOn" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                <svg id="iconIslandMicOff" class="d-none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+            <!-- Quick Hang Up -->
+            <button id="btnIslandEndCall" class="island-btn hangup" type="button" title="End call">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.42 19.42 0 0 1 4.89 12 19.79 19.79 0 0 1 1.93 3.62 2 2 0 0 1 3.91 1.45h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91M23 1 1 23"/></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SHARED INCOMING CALL MODAL / POPUP
+═══════════════════════════════════════ -->
+<div id="incomingCallModal" class="incoming-call-backdrop d-none">
+    <div class="incoming-call-card">
+        <div class="incoming-avatar-box">
+            <div class="incoming-pulse-ring"></div>
+            <div id="incomingCallerAvatar" class="incoming-avatar">#</div>
+        </div>
+        <h4 id="incomingCallerName" class="incoming-name">Caller Name</h4>
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
+            <span id="incomingCallTypeIcon">📞</span>
+            <span id="incomingCallTypeLabel" class="incoming-type-text">Incoming Audio Call...</span>
+        </div>
+        <div class="d-flex align-items-center justify-content-center gap-4">
+            <button id="btnDeclineCall" class="btn-incoming-action btn-decline" type="button" title="Decline">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.42 19.42 0 0 1 4.89 12 19.79 19.79 0 0 1 1.93 3.62 2 2 0 0 1 3.91 1.45h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91M23 1 1 23"/></svg>
+            </button>
+            <button id="btnAcceptCall" class="btn-incoming-action btn-accept" type="button" title="Accept">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.89 12 19.79 19.79 0 0 1 1.93 3.62 2 2 0 0 1 3.91 1.45h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91M23 1 1 23"/></svg>
+            </button>
+        </div>
+    </div>
+</div>

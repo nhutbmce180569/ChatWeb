@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MessageZ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/tech-theme.css" asp-append-version="true" />
+    <!-- Apply theme BEFORE render to avoid flash -->
+    <script src="~/js/theme-toggle.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="mz-nav">
+    <a class="mz-nav-brand" asp-controller="Home" asp-action="Index">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>MessageZ</span>
+    </a>
+
+    <ul class="mz-nav-links">
+        <li><a asp-controller="Chat" asp-action="Index">Chat</a></li>
+        @if (User.Identity != null && User.Identity.IsAuthenticated)
+        {
+            <li><a asp-controller="Profile" asp-action="Index">Profile</a></li>
+        }
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+
+    <div class="mz-nav-actions">
+        <!-- Theme toggle -->
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+            <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+        </button>
+
+        @if (User.Identity != null && User.Identity.IsAuthenticated)
+        {
+            var headerAvatar = User.FindFirst("AvatarUrl")?.Value;
+            var headerName = User.FindFirst("DisplayName")?.Value ?? User.Identity.Name ?? "User";
+            var headerInitial = !string.IsNullOrEmpty(headerName) ? headerName.Substring(0, 1).ToUpper() : "U";
+
+            <a asp-controller="Profile" asp-action="Index" class="btn-nav-ghost" title="My Profile">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Profile</span>
+            </a>
+            <a asp-controller="Profile" asp-action="Index" class="mz-user-chip d-none d-sm-flex text-decoration-none" title="View Profile">
+                <div class="avatar-xs">
+                    @if (!string.IsNullOrEmpty(headerAvatar))
+                    {
+                        <img src="@headerAvatar" alt="@headerName" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <span>@headerInitial</span>
+                    }
+                </div>
+                <span>@headerName</span>
+            </a>
+            <form class="m-0" asp-controller="Auth" asp-action="Logout" method="post">
+                <button type="submit" class="btn-nav-ghost">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                    Sign out
+                </button>
+            </form>
+        }
+        else
+        {
+            <a class="btn-nav-ghost" asp-controller="Auth" asp-action="Login">Sign in</a>
+            <a class="btn-nav-primary" asp-controller="Auth" asp-action="Register">
+                Get started
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+        }
+    </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+    <div class="container" style="max-width:1140px; padding: 0 20px;">
+        @RenderBody()
+    </div>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="mz-footer">
+    <div class="container" style="max-width:1140px; padding: 0 20px;">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                <span style="font-weight:800;font-size:0.95rem;color:var(--text);">MessageZ</span>
+            </div>
+            <p class="mb-0" style="font-size:0.8rem;color:var(--text-3);">© 2026 MessageZ · Built for the speed of thought.</p>
+            <div class="d-flex gap-4">
+                <a href="#" style="font-size:0.8rem;color:var(--text-3);text-decoration:none;">Privacy</a>
+                <a href="#" style="font-size:0.8rem;color:var(--text-3);text-decoration:none;">Terms</a>
+                <a href="#" style="font-size:0.8rem;color:var(--text-3);text-decoration:none;">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast-container" class="toast-container position-fixed top-0 end-0 p-4" style="z-index:2000;"></div>
+
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <partial name="_CallModal" />
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/toast-notification.js" asp-append-version="true"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        @if (TempData["SuccessMessage"] != null) { <text>showToast('@Html.Raw(TempData["SuccessMessage"])', 'success');</text> }
+        @if (TempData["ErrorMessage"]   != null) { <text>showToast('@Html.Raw(TempData["ErrorMessage"])',   'error');</text>   }
+    });
+</script>
+
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <script>
+        window.appData = {
+            token: '@User.FindFirst("Token")?.Value',
+            userId: '@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value',
+            displayName: '@Html.Raw(User.FindFirst("DisplayName")?.Value ?? User.Identity?.Name ?? "User")'
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="~/js/webrtc.js" asp-append-version="true"></script>
+    <script src="~/js/global-signalr.js" asp-append-version="true"></script>
+}
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
