@@ -1,0 +1,168 @@
+@model WebMVC.DTOs.Auth.RegisterRequest
+@{
+    ViewData["Title"] = "Sign Up | MessageZ";
+    Layout = "_AuthLayout";
+}
+
+<div class="auth-card" style="flex-direction:row-reverse;z-index:1;">
+
+    <!-- ── Brand Side (right on desktop) ── -->
+    <div class="auth-side" style="border-right:none;border-left:1px solid var(--border);">
+        <div class="auth-side-orb" style="width:260px;height:260px;background:rgba(34,211,238,0.12);top:-70px;right:-50px;"></div>
+        <div class="auth-side-orb" style="width:200px;height:200px;background:rgba(99,102,241,0.14);bottom:-40px;left:-40px;"></div>
+
+        <div style="position:relative;z-index:1;text-align:right;">
+            <a asp-controller="Home" asp-action="Index" style="display:flex;align-items:center;justify-content:flex-end;gap:8px;text-decoration:none;margin-bottom:48px;">
+                <span style="font-weight:800;font-size:1.25rem;letter-spacing:-0.5px;color:var(--text);">MessageZ</span>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </a>
+            <h2 style="font-size:2rem;font-weight:900;letter-spacing:-1.2px;color:var(--text);line-height:1.15;margin-bottom:14px;">
+                Start your<br><span class="text-grad">journey today.</span>
+            </h2>
+            <p style="font-size:0.9rem;color:var(--text-3);line-height:1.7;margin-left:auto;max-width:260px;">
+                Join teams around the world communicating seamlessly without boundaries.
+            </p>
+        </div>
+
+        <!-- Stats -->
+        <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;align-items:flex-end;">
+            @foreach (var s in new[]{("12K+","Active teams"),("< 50ms","Message latency"),("99.9%","Uptime SLA")}) {
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <div style="text-align:right;">
+                        <div style="font-size:1.1rem;font-weight:800;letter-spacing:-0.5px;color:var(--text);">@s.Item1</div>
+                        <div style="font-size:0.75rem;color:var(--text-3);">@s.Item2</div>
+                    </div>
+                    <div style="width:3px;height:36px;border-radius:2px;background:linear-gradient(to bottom,var(--primary),var(--cyan));"></div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- ── Form Side ── -->
+    <div class="auth-form-side">
+
+        <!-- Mobile brand -->
+        <div class="d-flex d-md-none align-items-center gap-2 mb-4">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span style="font-weight:800;font-size:1.15rem;color:var(--text);">MessageZ</span>
+        </div>
+
+        <div style="margin-bottom:28px;">
+            <h3 style="font-size:1.6rem;font-weight:800;letter-spacing:-0.8px;color:var(--text);margin-bottom:6px;">Create account</h3>
+            <p style="font-size:0.87rem;color:var(--text-3);">Fill in your details — it's completely free.</p>
+        </div>
+
+        <!-- Validation errors (only shown if there are top-level model errors) -->
+        <div asp-validation-summary="ModelOnly" style="display:@(ViewData.ModelState.ContainsKey(string.Empty) && ViewData.ModelState[string.Empty]?.Errors.Count > 0 ? "block" : "none");background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.22);border-radius:10px;padding:12px 14px;margin-bottom:20px;color:#f87171;font-size:0.82rem;"></div>
+
+        <form asp-action="Register" method="post" novalidate>
+
+            <!-- Username + Display Name -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                <div>
+                    <label class="field-label" asp-for="Username">Username</label>
+                    <input asp-for="Username" class="mz-input" placeholder="johndoe" autocomplete="username" />
+                    <div class="field-error"><span asp-validation-for="Username"></span></div>
+                </div>
+                <div>
+                    <label class="field-label" asp-for="DisplayName">Display name</label>
+                    <input asp-for="DisplayName" class="mz-input" placeholder="John Doe" />
+                    <div class="field-error"><span asp-validation-for="DisplayName"></span></div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div style="margin-bottom:16px;">
+                <label class="field-label" asp-for="Email">Email address</label>
+                <input asp-for="Email" class="mz-input" type="email" placeholder="name@company.com" autocomplete="email" />
+                <div class="field-error"><span asp-validation-for="Email"></span></div>
+            </div>
+
+            <!-- Password -->
+            <div style="margin-bottom:16px;">
+                <label class="field-label" asp-for="Password">Password</label>
+                <div class="input-wrap">
+                    <input asp-for="Password" class="mz-input" type="password" id="pwd-field"
+                           placeholder="Create a strong password" autocomplete="new-password"
+                           style="padding-right:44px !important;" />
+                    <button type="button" class="suffix-btn" data-pwd-toggle="pwd-field" aria-label="Show password">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                </div>
+                <!-- Strength bar -->
+                <div class="strength-bar">
+                    <div class="strength-fill" id="strength-fill"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:5px;">
+                    <span id="strength-label" style="font-size:0.72rem;font-weight:600;"></span>
+                    <span style="font-size:0.7rem;color:var(--text-3);">Min. 8 chars with uppercase, number & symbol</span>
+                </div>
+                <div class="field-error"><span asp-validation-for="Password"></span></div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div style="margin-bottom:24px;">
+                <label class="field-label" asp-for="ConfirmPassword">Confirm password</label>
+                <div class="input-wrap">
+                    <input asp-for="ConfirmPassword" class="mz-input" type="password" id="confirm-pwd-field"
+                           placeholder="Repeat your password" autocomplete="new-password"
+                           style="padding-right:44px !important;" />
+                    <button type="button" class="suffix-btn" data-pwd-toggle="confirm-pwd-field" aria-label="Show password">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                </div>
+                <div class="field-error"><span asp-validation-for="ConfirmPassword"></span></div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:13px;font-size:0.95rem;">
+                Create account
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+
+            <p style="text-align:center;font-size:0.72rem;color:var(--text-3);margin-top:12px;line-height:1.5;">
+                By creating an account you agree to our
+                <a href="#" style="color:var(--primary-2);text-decoration:none;">Terms</a> &amp;
+                <a href="#" style="color:var(--primary-2);text-decoration:none;">Privacy Policy</a>.
+            </p>
+        </form>
+
+        <!-- Divider -->
+        <div class="or-divider">OR SIGN UP WITH</div>
+
+        <div class="d-flex gap-2 mb-4">
+            <button class="btn-social" disabled>
+                <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                Google
+            </button>
+            <button class="btn-social" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                GitHub
+            </button>
+        </div>
+
+        <p style="text-align:center;font-size:0.85rem;color:var(--text-3);margin:0;">
+            Already have an account?
+            <a asp-action="Login" class="auth-link" style="color:var(--primary-2);font-weight:600;text-decoration:none;margin-left:4px;">Sign in →</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function() {
+            // Re-validate confirm password field dynamically when password or confirm password input changes
+            $('#confirm-pwd-field, #pwd-field').on('input', function() {
+                var confirmVal = $('#confirm-pwd-field').val();
+                if (confirmVal && confirmVal.length > 0) {
+                    $('#confirm-pwd-field').valid();
+                }
+            });
+        });
+    </script>
+}

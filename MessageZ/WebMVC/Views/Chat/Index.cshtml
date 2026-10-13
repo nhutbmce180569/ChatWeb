@@ -1,0 +1,540 @@
+@{
+    ViewData["Title"] = "Chat";
+    Layout = "~/Views/Shared/_ChatLayout.cshtml";
+}
+
+<div class="chat-wrap">
+
+    <!-- ═══════════════════════════════════════
+         SIDEBAR
+    ═══════════════════════════════════════ -->
+    <div class="chat-sidebar custom-scrollbar">
+
+        <!-- Sidebar header -->
+        <div class="sidebar-head">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <span class="sidebar-title">Messages</span>
+                <div style="display:flex;gap:6px;">
+                    <button class="btn-icon primary" id="btnNewChat" title="New direct message">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            <line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+                        </svg>
+                    </button>
+                    <button class="btn-icon primary" id="btnNewGroup" title="New group">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="chat-search">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);flex-shrink:0;">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="searchConversationInput" placeholder="Search conversations…" />
+            </div>
+        </div>
+
+        <!-- Contact list -->
+        <div class="contacts-list custom-scrollbar" id="contactsList">
+            <div style="text-align:center;padding:28px 16px;color:var(--text-3);font-size:0.83rem;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;opacity:0.4;">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                <div>Loading conversations…</div>
+            </div>
+        </div>
+
+        <!-- User Profile shortcut at bottom of sidebar -->
+        @{
+            var sideAvatar = User.FindFirst("AvatarUrl")?.Value;
+            var sideName = User.FindFirst("DisplayName")?.Value ?? User.Identity?.Name ?? "User";
+            var sideInitial = !string.IsNullOrEmpty(sideName) ? sideName.Substring(0, 1).ToUpper() : "U";
+        }
+        <div class="sidebar-user-footer">
+            <a asp-controller="Profile" asp-action="Index" class="sidebar-user-btn" title="View & Edit Profile">
+                <div class="c-avatar online" style="width:36px;height:36px;font-size:0.8rem;overflow:hidden;">
+                    @if (!string.IsNullOrEmpty(sideAvatar))
+                    {
+                        <img src="@sideAvatar" alt="@sideName" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+                    }
+                    else
+                    {
+                        <span>@sideInitial</span>
+                    }
+                </div>
+                <div class="c-info">
+                    <div class="c-name">@sideName</div>
+                    <div class="c-preview" style="color:var(--primary);font-weight:600;">Edit Profile & Avatar</div>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);flex-shrink:0;">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         CHAT MAIN — Empty state
+    ═══════════════════════════════════════ -->
+    <div class="chat-main" id="noChatSelected">
+        <div class="empty-chat">
+            <div class="empty-chat-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </div>
+            <h4 style="font-size:1rem;font-weight:700;color:var(--text);margin:0;">Select a conversation</h4>
+            <p style="font-size:0.84rem;color:var(--text-3);margin:0;max-width:240px;">Pick a chat from the sidebar or start a new one to begin messaging.</p>
+            <div style="display:flex;gap:10px;margin-top:6px;">
+                <button class="btn-icon primary" id="btnNewChatEmpty" title="New message" style="width:40px;height:40px;border-radius:10px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                </button>
+                <button class="btn-icon primary" id="btnNewGroupEmpty" title="New group" style="width:40px;height:40px;border-radius:10px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         CHAT MAIN — Active chat (hidden by default)
+    ═══════════════════════════════════════ -->
+    <div class="chat-main d-none" id="chatMainArea" style="position:relative;">
+
+        <!-- Top bar -->
+        <div class="chat-topbar">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div id="currentChatAvatar" class="c-avatar" style="width:38px;height:38px;font-size:0.85rem;">#</div>
+                <div>
+                    <div class="chat-topbar-name" id="currentChatName">Conversation</div>
+                    <div class="chat-topbar-sub" id="currentChatSubtitle">Active</div>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+                <!-- Audio call -->
+                <button class="btn-icon success d-none" id="btnAudioCall" title="Audio call">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.89 12 19.79 19.79 0 0 1 1.93 3.62 2 2 0 0 1 3.91 1.45h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                </button>
+                <!-- Video call -->
+                <button class="btn-icon success d-none" id="btnVideoCall" title="Video call">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                    </svg>
+                </button>
+                <!-- Group info (group only) -->
+                <button class="btn-icon d-none" id="btnGroupInfo" title="Group info">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Messages body -->
+        <div class="chat-body custom-scrollbar" id="chatBody"></div>
+
+        <!-- ── Staging bars ── -->
+
+        <!-- Image staging -->
+        <div id="imageStagingBar" class="d-none staging-bar">
+            <div style="position:relative;">
+                <img id="imageStagingThumb" src="" alt="Preview" style="width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border);" />
+                <button id="btnCancelStagedImage" type="button" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--red);border:none;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;">✕</button>
+            </div>
+            <div style="flex:1;min-width:0;">
+                <div id="imageStagingName" style="font-size:0.83rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+                <div id="imageStagingSize" style="font-size:0.72rem;color:var(--text-3);"></div>
+            </div>
+            <button id="btnSendStagedImage" type="button" class="btn-primary" style="padding:7px 16px;font-size:0.82rem;border-radius:9px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Send
+            </button>
+        </div>
+
+        <!-- File staging -->
+        <div id="fileStagingBar" class="d-none staging-bar">
+            <div style="position:relative;">
+                <div id="fileStagingIconBox" class="file-icon-box fi-gen">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <button id="btnCancelStagedFile" type="button" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--red);border:none;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;">✕</button>
+            </div>
+            <div style="flex:1;min-width:0;">
+                <div id="fileStagingName" style="font-size:0.83rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+                <div id="fileStagingSize" style="font-size:0.72rem;color:var(--text-3);"></div>
+            </div>
+            <button id="btnSendStagedFile" type="button" class="btn-primary" style="padding:7px 16px;font-size:0.82rem;border-radius:9px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Send
+            </button>
+        </div>
+
+        <!-- Video staging -->
+        <div id="videoStagingBar" class="d-none staging-bar">
+            <div style="position:relative;">
+                <div style="width:48px;height:48px;border-radius:8px;background:rgba(244,63,94,0.12);border:1px solid rgba(244,63,94,0.2);display:flex;align-items:center;justify-content:center;color:var(--red);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                </div>
+                <button id="btnCancelStagedVideo" type="button" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--red);border:none;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;">✕</button>
+            </div>
+            <div style="flex:1;min-width:0;">
+                <div id="videoStagingName" style="font-size:0.83rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+                <div id="videoStagingSize" style="font-size:0.72rem;color:var(--text-3);"></div>
+            </div>
+            <button id="btnSendStagedVideo" type="button" class="btn-primary" style="padding:7px 16px;font-size:0.82rem;border-radius:9px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                Send
+            </button>
+        </div>
+
+        <!-- Voice recording bar -->
+        <div id="voiceRecordingBar" class="d-none voice-bar">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <div class="pulse-dot"></div>
+                <span style="font-size:0.82rem;font-weight:600;color:var(--red);">Recording…</span>
+                <span id="voiceRecordTimer" style="font-size:0.8rem;font-family:monospace;color:var(--text-3);background:var(--surface-3);padding:2px 8px;border-radius:6px;">00:00</span>
+                <div class="voice-waves">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div style="display:flex;gap:8px;">
+                <button id="btnCancelVoiceRecord" type="button" class="btn-icon danger">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                </button>
+                <button id="btnSendVoiceRecord" type="button" class="send-btn" style="width:36px;height:36px;border-radius:9px;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- ── Input area ── -->
+        <div class="chat-input-zone" id="chatInputArea">
+            <!-- Hidden file inputs -->
+            <input type="file" id="imageInput" accept="image/png,image/jpeg,image/jpg,image/webp,image/gif" class="d-none" />
+            <input type="file" id="fileInput" class="d-none" />
+            <input type="file" id="videoInput" accept="video/mp4,video/webm,video/quicktime,video/x-matroska" class="d-none" />
+
+            <div class="input-row">
+                <!-- Attach buttons -->
+                <button id="btnAttachImage" type="button" class="attach-btn" title="Send image">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </button>
+                <button id="btnAttachFile" type="button" class="attach-btn" title="Attach file">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                </button>
+                <button id="btnAttachVideo" type="button" class="attach-btn" title="Attach video">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                </button>
+                <button id="btnRecordVideo" type="button" class="attach-btn" title="Record video">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+                </button>
+                <button id="btnVoiceRecord" type="button" class="attach-btn" title="Voice message">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                </button>
+
+                <!-- Input pill -->
+                <div class="chat-input-pill">
+                    <input type="text" id="chatInput" placeholder="Message…" autocomplete="off" />
+                </div>
+
+                <!-- Send -->
+                <button class="send-btn" id="btnSend" title="Send">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_CallModal" />
+
+<!-- ═══════════════════════════════════════
+     MODAL: New Direct Chat
+═══════════════════════════════════════ -->
+<div class="modal fade" id="newChatModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;vertical-align:middle;color:var(--primary);">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                    New Direct Message
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom:12px;">
+                    <input type="text" id="searchUserObj" class="form-control" placeholder="Search users by name or username…" />
+                </div>
+                <div id="userList" style="max-height:300px;overflow-y:auto;" class="custom-scrollbar">
+                    <div style="text-align:center;padding:20px;color:var(--text-3);font-size:0.85rem;">Loading users…</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODAL: New Group
+═══════════════════════════════════════ -->
+<div class="modal fade" id="newGroupModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;vertical-align:middle;color:var(--primary);">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    Create Group
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom:12px;">
+                    <label class="form-label">Group Name</label>
+                    <input type="text" id="groupNameInput" class="form-control" placeholder="e.g. Project Team" maxlength="100" />
+                </div>
+                <div style="margin-bottom:8px;">
+                    <label class="form-label">Selected (<span id="selectedCountText">0</span>)</label>
+                    <div id="selectedGroupUsersChips" style="display:flex;flex-wrap:wrap;gap:6px;min-height:38px;padding:8px;background:var(--surface-3);border:1px solid var(--border);border-radius:8px;max-height:80px;overflow-y:auto;" class="custom-scrollbar">
+                        <span style="font-size:0.8rem;color:var(--text-3);align-self:center;font-style:italic;">No members selected</span>
+                    </div>
+                </div>
+                <div style="margin-bottom:8px;">
+                    <label class="form-label">Search users</label>
+                    <input type="text" id="searchGroupUser" class="form-control" placeholder="Search by name or username…" />
+                </div>
+                <div id="groupUserList" style="max-height:200px;overflow-y:auto;" class="custom-scrollbar">
+                    <div style="text-align:center;padding:16px;color:var(--text-3);font-size:0.85rem;">Loading users…</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-icon" data-bs-dismiss="modal" style="width:auto;padding:8px 16px;border-radius:9px;font-size:0.85rem;">Cancel</button>
+                <button type="button" class="btn-primary" id="btnSubmitNewGroup" style="padding:8px 20px;border-radius:9px;font-size:0.85rem;">
+                    <span id="btnSubmitNewGroupText">Create Group</span>
+                    <span id="btnSubmitNewGroupSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODAL: Group Info
+═══════════════════════════════════════ -->
+<div class="modal fade" id="groupInfoModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="groupInfoModalTitle">Group Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Group name -->
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--surface-3);border:1px solid var(--border);border-radius:10px;margin-bottom:14px;">
+                    <div>
+                        <div style="font-size:0.72rem;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px;">Group Name</div>
+                        <div style="font-weight:700;color:var(--text);" id="infoGroupNameText">Group Name</div>
+                    </div>
+                    <button class="btn-icon primary" id="btnEditGroupName" title="Rename group" style="width:32px;height:32px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                </div>
+
+                <!-- Members header -->
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-size:0.72rem;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.04em;">Members (<span id="infoMemberCountText">0</span>)</span>
+                    <button class="btn-icon success" id="btnOpenAddMembersModal" style="width:auto;padding:5px 10px;border-radius:8px;font-size:0.78rem;gap:5px;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Add
+                    </button>
+                </div>
+
+                <div id="groupMembersList" style="max-height:220px;overflow-y:auto;margin-bottom:14px;" class="custom-scrollbar">
+                    <div style="text-align:center;padding:16px;color:var(--text-3);font-size:0.85rem;">Loading…</div>
+                </div>
+
+                <!-- Leave -->
+                <div style="padding-top:12px;border-top:1px solid var(--border);">
+                    <button class="btn-icon danger" id="btnLeaveCurrentGroup" style="width:100%;border-radius:9px;padding:10px;font-size:0.85rem;gap:8px;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Leave Group
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODAL: Add Members
+═══════════════════════════════════════ -->
+<div class="modal fade" id="addMembersModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Members</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="searchAddMemberUser" class="form-control" placeholder="Search users to add…" style="margin-bottom:10px;" />
+                <div id="addMemberList" style="max-height:240px;overflow-y:auto;" class="custom-scrollbar">
+                    <div style="text-align:center;padding:16px;color:var(--text-3);font-size:0.85rem;">Loading users…</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-icon" data-bs-dismiss="modal" style="width:auto;padding:8px 14px;border-radius:9px;font-size:0.85rem;">Cancel</button>
+                <button type="button" class="btn-primary" id="btnSubmitAddMembers" style="padding:8px 18px;border-radius:9px;font-size:0.85rem;">Add Members</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODAL: Media Lightbox (Image & Video)
+═══════════════════════════════════════ -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background:var(--surface)!important;border:1px solid var(--border-2)!important;border-radius:18px!important;box-shadow:var(--shadow-lg)!important;color:var(--text)!important;overflow:hidden;">
+            <div class="modal-header d-flex align-items-center justify-content-between" style="border-bottom:1px solid var(--border)!important;padding:12px 18px!important;">
+                <div class="d-flex align-items-center gap-2">
+                    <h5 class="modal-title mb-0" id="mediaModalTitle" style="font-size:0.95rem;font-weight:700;color:var(--text);">Media Preview</h5>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a id="btnDownloadImage" href="#" target="_blank" download class="btn-icon" style="width:auto;padding:6px 14px;border-radius:8px;font-size:0.8rem;gap:6px;text-decoration:none;" title="Download">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download
+                    </a>
+                    <button type="button" class="btn-close ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body" style="text-align:center;padding:16px!important;background:var(--surface-2);">
+                <img id="imageModalPreview" src="" class="img-fluid d-none" style="max-height:75vh;object-fit:contain;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.15);" />
+                <video id="videoModalPreview" class="img-fluid d-none" controls playsinline style="max-height:75vh;max-width:100%;border-radius:10px;background:#000;box-shadow:0 4px 16px rgba(0,0,0,0.2);"></video>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODAL: Camera Recording
+═══════════════════════════════════════ -->
+<div class="modal fade" id="videoRecordModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background:var(--surface)!important;border:1px solid var(--border-2)!important;border-radius:18px!important;box-shadow:var(--shadow-lg)!important;color:var(--text)!important;overflow:hidden;">
+            <div class="modal-header d-flex align-items-center justify-content-between" style="border-bottom:1px solid var(--border)!important;padding:14px 20px!important;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <h5 class="modal-title mb-0" style="font-size:0.95rem;font-weight:700;color:var(--text);">Record Video</h5>
+                    <span id="camRecBadge" class="d-none" style="background:var(--red);color:#fff;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:99px;">REC</span>
+                </div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="text-align:center;padding:20px!important;background:var(--surface-2);">
+                <div class="cam-finder">
+                    <video id="cameraLiveView" class="cam-video-player" autoplay playsinline muted></video>
+                    <video id="cameraPlaybackView" class="cam-video-player d-none" controls playsinline></video>
+                    <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);border-radius:99px;padding:4px 14px;font-size:0.75rem;color:#fff;display:flex;align-items:center;gap:6px;backdrop-filter:blur(4px);">
+                        <div class="pulse-dot" style="width:7px;height:7px;"></div>
+                        <span id="camRecordTimer" style="font-family:monospace;">00:00 / 01:00</span>
+                    </div>
+                    <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,0.15);">
+                        <div id="camRecordProgress" style="height:100%;background:var(--red);width:0;transition:width 0.3s linear;"></div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:center;gap:14px;margin-top:20px;">
+                    <button id="btnStartCamRecord" type="button" class="cam-rec-btn" title="Start Recording"></button>
+                    <button id="btnStopCamRecord" type="button" class="cam-stop-btn d-none" title="Stop Recording">
+                        <div class="cam-stop-icon"></div>
+                    </button>
+                </div>
+                <div id="camRecordActions" class="d-none" style="display:flex;justify-content:center;gap:12px;margin-top:16px;">
+                    <button id="btnRetakeCamRecord" type="button" class="btn-icon" style="width:auto;padding:9px 18px;border-radius:10px;gap:6px;font-size:0.85rem;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.85"/></svg>
+                        Retake
+                    </button>
+                    <button id="btnSendCamRecord" type="button" class="btn-primary" style="padding:9px 20px;border-radius:10px;font-size:0.85rem;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        Send Video
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =============================================
+     MODAL: Recall Message Confirmation
+============================================= -->
+<div class="modal fade" id="recallMessageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 380px;">
+        <div class="modal-content" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <div class="modal-header border-0 pb-0" style="padding: 16px 18px 8px;">
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(239, 68, 68, 0.12); color: #ef4444; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="1 4 1 10 7 10"></polyline>
+                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h5 class="modal-title mb-0" style="font-size: 1rem; font-weight: 700; color: var(--text);">Recall Message</h5>
+                        <div style="font-size: 0.72rem; color: var(--text-3);">Valid within 5 hours</div>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding: 12px 18px 16px; font-size: 0.88rem; color: var(--text-2); line-height: 1.5;">
+                Are you sure you want to recall this message? The message and any attachments will be permanently removed for everyone.
+            </div>
+            <div class="modal-footer border-0 pt-0 gap-2" style="padding: 0 18px 16px;">
+                <button type="button" class="btn-icon" data-bs-dismiss="modal" style="width: auto; padding: 7px 16px; border-radius: 9px; font-size: 0.85rem;">Cancel</button>
+                <button type="button" class="btn-primary" id="btnConfirmRecall" style="background: #ef4444; border-color: #ef4444; padding: 7px 18px; border-radius: 9px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
+                    <span id="btnConfirmRecallText">Recall</span>
+                    <span id="btnConfirmRecallSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.appData = {
+            token: '@User.FindFirst("Token")?.Value',
+            userId: '@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value',
+            displayName: '@Html.Raw(User.FindFirst("DisplayName")?.Value ?? User.Identity?.Name ?? "User")'
+        };
+        // Wire up empty-state buttons to sidebar buttons
+        document.addEventListener("DOMContentLoaded", function() {
+            const e1 = document.getElementById('btnNewChatEmpty');
+            const e2 = document.getElementById('btnNewGroupEmpty');
+            if (e1) e1.onclick = () => document.getElementById('btnNewChat')?.click();
+            if (e2) e2.onclick = () => document.getElementById('btnNewGroup')?.click();
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="~/js/chat.js" asp-append-version="true"></script>
+    <script src="~/js/chat-attachments.js" asp-append-version="true"></script>
+    <script src="~/js/chat-voice.js" asp-append-version="true"></script>
+    <script src="~/js/chat-video.js" asp-append-version="true"></script>
+    <script src="~/js/chat-group.js" asp-append-version="true"></script>
+    <script src="~/js/webrtc.js" asp-append-version="true"></script>
+}

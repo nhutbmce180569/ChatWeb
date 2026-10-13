@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/tech-theme.css" asp-append-version="true" />
+    <script src="~/js/theme-toggle.js" asp-append-version="true"></script>
+</head>
+<body style="min-height:100vh;">
+
+<div class="auth-bg">
+    <!-- Background orbs -->
+    <div class="bg-orb" style="width:420px;height:420px;background:rgba(99,102,241,0.13);top:-120px;left:-100px;"></div>
+    <div class="bg-orb" style="width:360px;height:360px;background:rgba(139,92,246,0.1);bottom:-100px;right:-80px;"></div>
+    <div class="bg-orb" style="width:260px;height:260px;background:rgba(34,211,238,0.06);top:40%;left:55%;"></div>
+
+    @RenderBody()
+</div>
+
+<!-- Theme toggle (floating) -->
+<button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"
+        style="position:fixed;top:18px;right:18px;z-index:500;">
+    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+</button>
+
+<!-- Toast -->
+<div id="toast-container" class="toast-container position-fixed top-0 end-0 p-4" style="z-index:2000;"></div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/toast-notification.js" asp-append-version="true"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        @if (TempData["SuccessMessage"] != null) { <text>showToast('@Html.Raw(TempData["SuccessMessage"])', 'success');</text> }
+        @if (TempData["ErrorMessage"]   != null) { <text>showToast('@Html.Raw(TempData["ErrorMessage"])',   'error');</text>   }
+
+        // Auth page transition
+        document.querySelectorAll('.auth-link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = this.getAttribute('href');
+                const card = document.querySelector('.auth-card');
+                if (card) { card.classList.add('exit'); setTimeout(()=>{ window.location.href = url; }, 210); }
+                else { window.location.href = url; }
+            });
+        });
+
+        // Password visibility toggle
+        document.querySelectorAll('[data-pwd-toggle]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const input = document.getElementById(this.dataset.pwdToggle);
+                if (!input) return;
+                const show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                this.innerHTML = show
+                    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+                    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+            });
+        });
+
+        // Password strength
+        const pwdInput = document.getElementById('pwd-field');
+        const strengthFill = document.getElementById('strength-fill');
+        const strengthLabel = document.getElementById('strength-label');
+        if (pwdInput && strengthFill) {
+            pwdInput.addEventListener('input', function() {
+                const v = this.value;
+                let s = 0;
+                if (v.length >= 8) s++;
+                if (/[A-Z]/.test(v)) s++;
+                if (/[0-9]/.test(v)) s++;
+                if (/[^A-Za-z0-9]/.test(v)) s++;
+                const configs = [
+                    {w:'0%',   c:'transparent', t:''},
+                    {w:'25%',  c:'#f43f5e',     t:'Weak'},
+                    {w:'50%',  c:'#f59e0b',     t:'Fair'},
+                    {w:'75%',  c:'#6366f1',     t:'Good'},
+                    {w:'100%', c:'#10b981',     t:'Strong'},
+                ];
+                strengthFill.style.width = configs[s].w;
+                strengthFill.style.background = configs[s].c;
+                if (strengthLabel) { strengthLabel.textContent = configs[s].t; strengthLabel.style.color = configs[s].c; }
+            });
+        }
+
+        // Show validation summary if has errors
+        const vs = document.querySelector('[data-valmsg-summary]');
+        if (vs && vs.querySelectorAll('li').length > 0) vs.style.display = 'block';
+    });
+</script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

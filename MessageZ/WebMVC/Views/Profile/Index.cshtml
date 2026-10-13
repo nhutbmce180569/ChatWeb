@@ -1,0 +1,704 @@
+@model WebMVC.DTOs.User.UpdateProfileViewModel
+@{
+    ViewData["Title"] = "My Profile | MessageZ";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/lib/cropperjs/cropper.min.css" asp-append-version="true" />
+    <style>
+        .profile-container {
+            max-width: 860px;
+            margin: 40px auto 60px;
+        }
+
+        .profile-header-card {
+            background: var(--surface);
+            border: 1px solid var(--border-2);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .profile-cover {
+            height: 140px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(168, 85, 247, 0.25), rgba(34, 211, 238, 0.2));
+            position: relative;
+        }
+
+        .profile-cover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 60%);
+        }
+
+        .profile-avatar-wrap {
+            position: relative;
+            margin-top: -60px;
+            margin-left: 36px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--surface);
+            padding: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: inline-block;
+        }
+
+        .profile-avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            overflow: hidden;
+        }
+
+        .profile-avatar-btn {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: 3px solid var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(99,102,241,0.4);
+        }
+
+        .profile-avatar-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+            color: #fff;
+        }
+
+        .profile-meta {
+            padding: 16px 36px 32px;
+        }
+
+        .profile-name {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .profile-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            border-radius: 99px;
+            color: var(--primary-2);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .profile-content-card {
+            background: var(--surface);
+            border: 1px solid var(--border-2);
+            border-radius: 20px;
+            padding: 32px 36px;
+            margin-top: 24px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .profile-section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Avatar Cropper Modal Styles */
+        .crop-container {
+            width: 100%;
+            height: 340px;
+            background: #090d16;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .crop-container img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+
+        .camera-container {
+            width: 100%;
+            height: 340px;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            display: none;
+        }
+
+        .camera-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Mirror camera for selfie */
+        }
+
+        .camera-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .camera-guide-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
+        }
+
+        .avatar-modal-tab {
+            padding: 8px 16px;
+            border-radius: 9px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-3);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .avatar-modal-tab.active {
+            background: var(--surface-2);
+            color: var(--text);
+            border-color: var(--border);
+        }
+
+        .avatar-modal-tab:hover:not(.active) {
+            color: var(--text);
+        }
+    </style>
+}
+
+<div class="profile-container">
+
+    <!-- ── Profile Overview Header ── -->
+    <div class="profile-header-card">
+        <div class="profile-cover"></div>
+
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-end">
+            <!-- Avatar -->
+            <div class="profile-avatar-wrap">
+                <div class="profile-avatar-img" id="currentAvatarView">
+                    @if (!string.IsNullOrEmpty(Model.AvatarUrl))
+                    {
+                        <img src="@Model.AvatarUrl" alt="@Model.DisplayName" id="avatarImageSrc" style="width:100%;height:100%;object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <span id="avatarLetterFallback">@(string.IsNullOrEmpty(Model.DisplayName) ? "U" : Model.DisplayName.Substring(0, 1).ToUpper())</span>
+                    }
+                </div>
+                <button type="button" class="profile-avatar-btn" id="btnOpenAvatarModal" title="Change Avatar (Upload or Camera)">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Header Quick Info -->
+            <div class="px-4 pb-3 pt-2 pt-sm-0 text-sm-end">
+                <span class="profile-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Verified Account
+                </span>
+            </div>
+        </div>
+
+        <div class="profile-meta">
+            <h2 class="profile-name" id="profileNameDisplay">@Model.DisplayName</h2>
+            <div style="font-size:0.88rem;color:var(--text-3);display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:6px;">
+                <span>@("@" + Model.Username)</span>
+                <span>•</span>
+                <span>@Model.Email</span>
+                @if (Model.CreatedAt.HasValue)
+                {
+                    <span>•</span>
+                    <span>Joined @Model.CreatedAt.Value.ToString("MMMM yyyy")</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Update Profile Details Card ── -->
+    <div class="profile-content-card">
+        <div class="profile-section-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+            </svg>
+            Account Details &amp; Personal Info
+        </div>
+
+        <form asp-action="Update" method="post" id="profileForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="AvatarUrl" id="formAvatarUrl" />
+
+            <div class="row g-3">
+                <!-- Display Name -->
+                <div class="col-12 col-md-6">
+                    <label class="field-label" asp-for="DisplayName">Display Name</label>
+                    <input asp-for="DisplayName" class="mz-input" id="inputDisplayName" placeholder="Enter your display name" autocomplete="name" />
+                    <div class="field-error"><span asp-validation-for="DisplayName"></span></div>
+                    <small style="font-size:0.75rem;color:var(--text-3);margin-top:4px;display:block;">
+                        This name will be visible to your team members and contacts in chats.
+                    </small>
+                </div>
+
+                <!-- Username (Readonly) -->
+                <div class="col-12 col-md-6">
+                    <label class="field-label">Username</label>
+                    <div class="input-wrap">
+                        <input type="text" asp-for="Username" class="mz-input" readonly disabled style="opacity:0.75;cursor:not-allowed;padding-left:36px;width:100%;" />
+                        <span class="suffix-btn" style="pointer-events:none;color:var(--text-3);">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </span>
+                    </div>
+                    <small style="font-size:0.75rem;color:var(--text-3);margin-top:4px;display:block;">
+                        Unique user identifier. Cannot be modified.
+                    </small>
+                </div>
+
+                <!-- Email (Readonly) -->
+                <div class="col-12 col-md-6 mt-3">
+                    <label class="field-label">Email Address</label>
+                    <div class="input-wrap">
+                        <input value="@Model.Email" class="mz-input" readonly disabled style="opacity:0.75;cursor:not-allowed;" />
+                        <span class="suffix-btn" style="pointer-events:none;color:var(--green);">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Cloudinary Avatar Status -->
+                <div class="col-12 col-md-6 mt-3">
+                    <label class="field-label">Avatar Cloud Storage</label>
+                    <div style="padding:11px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;font-size:0.84rem;color:var(--text-2);display:flex;align-items:center;gap:10px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                        <span>Powered by <strong>Cloudinary CDN</strong> (High-speed optimization)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-end align-items-center gap-3 mt-4 pt-3" style="border-top:1px solid var(--border);">
+                <button type="submit" class="btn-primary" id="btnSaveProfile" style="padding:11px 26px;font-size:0.9rem;">
+                    Save changes
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     MODAL: Avatar Crop & Camera Capture (Cloudinary)
+══════════════════════════════════════════════════ -->
+<div class="modal fade" id="avatarModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background:var(--surface)!important;border:1px solid var(--border-2)!important;border-radius:20px!important;box-shadow:var(--shadow-lg);">
+            
+            <!-- Modal Header -->
+            <div class="modal-header" style="border-bottom:1px solid var(--border);padding:18px 24px;">
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width:32px;height:32px;border-radius:8px;background:rgba(99,102,241,0.15);display:flex;align-items:center;justify-content:center;color:var(--primary);">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    </div>
+                    <div>
+                        <h5 class="modal-title m-0" style="font-size:1.05rem;font-weight:700;color:var(--text);">Update Profile Photo</h5>
+                    </div>
+                </div>
+                <button type="button" class="btn-close mz-toast-close" data-bs-dismiss="modal" id="btnCloseAvatarModal"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body" style="padding:24px;">
+                
+                <!-- Mode Switch Tabs -->
+                <div class="d-flex gap-2 mb-3">
+                    <button type="button" class="avatar-modal-tab active" id="tabUploadFile">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Upload &amp; Crop Image
+                    </button>
+                    <button type="button" class="avatar-modal-tab" id="tabCamera">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                        Take Photo (Camera)
+                    </button>
+                </div>
+
+                <!-- 1. View: Image Crop Area -->
+                <div id="viewCropArea">
+                    <input type="file" id="avatarFileInput" accept="image/png, image/jpeg, image/webp, image/gif" style="display:none;" />
+
+                    <div id="emptyImagePlaceholder" style="border:2px dashed var(--border);border-radius:14px;padding:48px 20px;text-align:center;cursor:pointer;background:var(--surface-2);transition:border-color 0.2s;">
+                        <div style="width:52px;height:52px;border-radius:50%;background:rgba(99,102,241,0.12);color:var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        </div>
+                        <div style="font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:4px;">Choose an image to crop</div>
+                        <p style="font-size:0.8rem;color:var(--text-3);margin-bottom:14px;">JPG, PNG, or WEBP up to 10MB</p>
+                        <button type="button" class="btn-primary" id="btnSelectFileTrigger" style="padding:8px 20px;font-size:0.85rem;">
+                            Browse Computer
+                        </button>
+                    </div>
+
+                    <div id="cropperWrapper" style="display:none;">
+                        <div class="crop-container">
+                            <img id="imageToCrop" src="" alt="Crop image" />
+                        </div>
+
+                        <!-- Cropper Controls -->
+                        <div class="d-flex justify-content-between align-items-center mt-3 gap-2 flex-wrap">
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn-icon" id="btnZoomIn" title="Zoom in">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                                </button>
+                                <button type="button" class="btn-icon" id="btnZoomOut" title="Zoom out">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                                </button>
+                                <button type="button" class="btn-icon" id="btnRotateLeft" title="Rotate left">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                                </button>
+                                <button type="button" class="btn-icon" id="btnRotateRight" title="Rotate right">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                                </button>
+                                <button type="button" class="btn-icon" id="btnResetCrop" title="Reset">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                                </button>
+                            </div>
+                            <button type="button" class="btn-icon" id="btnChooseAnotherImage" style="width:auto;padding:6px 14px;border-radius:8px;font-size:0.8rem;gap:6px;">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                Choose different file
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. View: Live Camera Capture Area -->
+                <div id="viewCameraArea" style="display:none;">
+                    <div class="camera-container" id="cameraBox">
+                        <video id="cameraVideo" autoplay playsinline></video>
+                        <div class="camera-overlay">
+                            <div class="camera-guide-circle"></div>
+                        </div>
+                    </div>
+
+                    <div id="cameraErrorMsg" class="alert alert-danger d-none mt-3" style="font-size:0.85rem;"></div>
+
+                    <div class="d-flex justify-content-center align-items-center gap-3 mt-3">
+                        <button type="button" class="btn-primary" id="btnCapturePhoto" style="padding:10px 24px;border-radius:99px;font-size:0.88rem;gap:8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+                            Capture Photo
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer" style="border-top:1px solid var(--border);padding:16px 24px;justify-content:space-between;">
+                <button type="button" class="btn-icon" data-bs-dismiss="modal" style="width:auto;padding:8px 18px;border-radius:9px;font-size:0.85rem;">
+                    Cancel
+                </button>
+                <button type="button" class="btn-primary" id="btnSaveCroppedAvatar" disabled style="padding:9px 24px;font-size:0.88rem;">
+                    <span class="spinner-border spinner-border-sm d-none" id="avatarUploadSpinner" role="status"></span>
+                    <span id="btnSaveCroppedAvatarText">Save to Cloudinary</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/lib/cropperjs/cropper.min.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let cropper = null;
+            let cameraStream = null;
+            let capturedBlob = null;
+
+            const avatarModalEl = document.getElementById('avatarModal');
+            const avatarModal = new bootstrap.Modal(avatarModalEl);
+
+            const btnOpenModal = document.getElementById('btnOpenAvatarModal');
+            const tabUploadFile = document.getElementById('tabUploadFile');
+            const tabCamera = document.getElementById('tabCamera');
+            const viewCropArea = document.getElementById('viewCropArea');
+            const viewCameraArea = document.getElementById('viewCameraArea');
+            const avatarFileInput = document.getElementById('avatarFileInput');
+            const emptyPlaceholder = document.getElementById('emptyImagePlaceholder');
+            const cropperWrapper = document.getElementById('cropperWrapper');
+            const imageToCrop = document.getElementById('imageToCrop');
+            const btnSaveAvatar = document.getElementById('btnSaveCroppedAvatar');
+            const btnSaveAvatarText = document.getElementById('btnSaveCroppedAvatarText');
+            const avatarUploadSpinner = document.getElementById('avatarUploadSpinner');
+
+            // Camera elements
+            const cameraBox = document.getElementById('cameraBox');
+            const cameraVideo = document.getElementById('cameraVideo');
+            const btnCapturePhoto = document.getElementById('btnCapturePhoto');
+            const cameraErrorMsg = document.getElementById('cameraErrorMsg');
+
+            // Open Modal
+            btnOpenModal.addEventListener('click', function () {
+                switchTab('upload');
+                avatarModal.show();
+            });
+
+            // Trigger file dialog
+            document.getElementById('btnSelectFileTrigger').addEventListener('click', () => avatarFileInput.click());
+            emptyPlaceholder.addEventListener('click', () => avatarFileInput.click());
+            document.getElementById('btnChooseAnotherImage').addEventListener('click', () => avatarFileInput.click());
+
+            // Handle file selected
+            avatarFileInput.addEventListener('change', function (e) {
+                const files = e.target.files;
+                if (!files || files.length === 0) return;
+                const file = files[0];
+
+                if (!file.type.startsWith('image/')) {
+                    showToast('Please select a valid image file.', 'error');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    initCropper(event.target.result);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Initialize Cropper.js
+            function initCropper(imageSrc) {
+                emptyPlaceholder.style.display = 'none';
+                cropperWrapper.style.display = 'block';
+                btnSaveAvatar.disabled = false;
+
+                imageToCrop.src = imageSrc;
+
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(imageToCrop, {
+                    aspectRatio: 1, // Circular / Square Avatar
+                    viewMode: 1,
+                    autoCropArea: 0.85,
+                    responsive: true,
+                    background: false,
+                    guides: true,
+                    highlight: true,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    minCropBoxWidth: 80,
+                    minCropBoxHeight: 80
+                });
+            }
+
+            // Cropper control buttons
+            document.getElementById('btnZoomIn').addEventListener('click', () => cropper && cropper.zoom(0.1));
+            document.getElementById('btnZoomOut').addEventListener('click', () => cropper && cropper.zoom(-0.1));
+            document.getElementById('btnRotateLeft').addEventListener('click', () => cropper && cropper.rotate(-90));
+            document.getElementById('btnRotateRight').addEventListener('click', () => cropper && cropper.rotate(90));
+            document.getElementById('btnResetCrop').addEventListener('click', () => cropper && cropper.reset());
+
+            // Switch Tabs
+            tabUploadFile.addEventListener('click', () => switchTab('upload'));
+            tabCamera.addEventListener('click', () => switchTab('camera'));
+
+            function switchTab(mode) {
+                if (mode === 'upload') {
+                    tabUploadFile.classList.add('active');
+                    tabCamera.classList.remove('active');
+                    viewCropArea.style.display = 'block';
+                    viewCameraArea.style.display = 'none';
+                    stopCamera();
+                } else if (mode === 'camera') {
+                    tabCamera.classList.add('active');
+                    tabUploadFile.classList.remove('active');
+                    viewCropArea.style.display = 'none';
+                    viewCameraArea.style.display = 'block';
+                    startCamera();
+                }
+            }
+
+            // WebRTC Camera implementation
+            async function startCamera() {
+                cameraErrorMsg.classList.add('d-none');
+                cameraBox.style.display = 'block';
+                try {
+                    cameraStream = await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            width: { ideal: 640 },
+                            height: { ideal: 640 },
+                            facingMode: 'user'
+                        },
+                        audio: false
+                    });
+                    cameraVideo.srcObject = cameraStream;
+                    await cameraVideo.play();
+                } catch (err) {
+                    cameraErrorMsg.textContent = 'Camera access was denied or is unavailable: ' + err.message;
+                    cameraErrorMsg.classList.remove('d-none');
+                    cameraBox.style.display = 'none';
+                }
+            }
+
+            function stopCamera() {
+                if (cameraStream) {
+                    cameraStream.getTracks().forEach(track => track.stop());
+                    cameraStream = null;
+                }
+            }
+
+            // Capture photo from Camera
+            btnCapturePhoto.addEventListener('click', function () {
+                if (!cameraStream) return;
+
+                const videoWidth = cameraVideo.videoWidth || 640;
+                const videoHeight = cameraVideo.videoHeight || 640;
+
+                const canvas = document.createElement('canvas');
+                canvas.width = videoWidth;
+                canvas.height = videoHeight;
+                const ctx = canvas.getContext('2d');
+
+                // Mirror image horizontally to match preview
+                ctx.translate(videoWidth, 0);
+                ctx.scale(-1, 1);
+                ctx.drawImage(cameraVideo, 0, 0, videoWidth, videoHeight);
+
+                stopCamera();
+                const capturedDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+                // Switch back to Crop area with the captured photo
+                switchTab('upload');
+                initCropper(capturedDataUrl);
+                showToast('Photo captured! Crop your avatar as desired.', 'success');
+            });
+
+            // Cleanup when closing modal
+            avatarModalEl.addEventListener('hidden.bs.modal', function () {
+                stopCamera();
+            });
+
+            // Upload cropped avatar to Cloudinary
+            btnSaveAvatar.addEventListener('click', function () {
+                if (!cropper) return;
+
+                btnSaveAvatar.disabled = true;
+                avatarUploadSpinner.classList.remove('d-none');
+                btnSaveAvatarText.textContent = 'Uploading to Cloudinary...';
+
+                // Get cropped canvas with high quality
+                const canvas = cropper.getCroppedCanvas({
+                    width: 400,
+                    height: 400,
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high'
+                });
+
+                canvas.toBlob(function (blob) {
+                    if (!blob) {
+                        showToast('Failed to generate cropped image.', 'error');
+                        resetSaveButton();
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('file', blob, 'avatar_' + Date.now() + '.jpg');
+
+                    // AJAX upload to ProfileController
+                    fetch('/Profile/UploadAvatarAjax', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        resetSaveButton();
+                        if (data.success && data.avatarUrl) {
+                            // Update avatar on Profile view
+                            const avatarView = document.getElementById('currentAvatarView');
+                            avatarView.innerHTML = `<img src="${data.avatarUrl}" alt="Avatar" id="avatarImageSrc" style="width:100%;height:100%;object-fit:cover;" />`;
+
+                            // Update hidden form field
+                            const formAvatarInput = document.getElementById('formAvatarUrl');
+                            if (formAvatarInput) formAvatarInput.value = data.avatarUrl;
+
+                            // Update navbar user avatar if present
+                            const navAvatar = document.querySelector('.mz-user-chip .avatar-xs');
+                            if (navAvatar) {
+                                navAvatar.innerHTML = `<img src="${data.avatarUrl}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`;
+                            }
+
+                            avatarModal.hide();
+                            showToast('Avatar uploaded to Cloudinary successfully!', 'success');
+                        } else {
+                            showToast(data.message || 'Error uploading avatar.', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        resetSaveButton();
+                        showToast('Error uploading avatar: ' + err.message, 'error');
+                    });
+                }, 'image/jpeg', 0.92);
+            });
+
+            function resetSaveButton() {
+                btnSaveAvatar.disabled = false;
+                avatarUploadSpinner.classList.add('d-none');
+                btnSaveAvatarText.textContent = 'Save to Cloudinary';
+            }
+
+            // Sync Display Name updates real-time
+            const inputName = document.getElementById('inputDisplayName');
+            const displayNameHeading = document.getElementById('profileNameDisplay');
+            if (inputName && displayNameHeading) {
+                inputName.addEventListener('input', function () {
+                    displayNameHeading.textContent = this.value || 'User';
+                });
+            }
+        });
+    </script>
+}
