@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\MessageZ\\MessageZ\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\dtos\\conversation\\addgroupmembersrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\dtos\\conversation\\addgroupmembersrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,19 +22,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AddGroupMembersRequest.cs",
-              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\DTOs\\Conversation\\AddGroupMembersRequest.cs",
-              "RelativeDocumentMoniker": "WebAPI\\DTOs\\Conversation\\AddGroupMembersRequest.cs",
-              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\DTOs\\Conversation\\AddGroupMembersRequest.cs",
-              "RelativeToolTip": "WebAPI\\DTOs\\Conversation\\AddGroupMembersRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-13T12:17:40.76Z",
-              "EditorCaption": ""
             }
           ]
         }
