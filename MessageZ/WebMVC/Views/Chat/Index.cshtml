@@ -565,7 +565,8 @@
         window.appData = {
             token: '@User.FindFirst("Token")?.Value',
             userId: '@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value',
-            displayName: '@Html.Raw(User.FindFirst("DisplayName")?.Value ?? User.Identity?.Name ?? "User")'
+            displayName: '@Html.Raw(User.FindFirst("DisplayName")?.Value ?? User.Identity?.Name ?? "User")',
+            apiBaseUrl: '@(Configuration["WebAPI:BaseUrl"] ?? Configuration.GetConnectionString("WebAPI") ?? "http://localhost:7088")'
         };
         // Wire up empty-state buttons to sidebar buttons
         document.addEventListener("DOMContentLoaded", function() {

@@ -12,8 +12,9 @@
         return;
     }
 
+    const backendUrl = (window.appData?.apiBaseUrl || 'http://localhost:7088').replace(/\/+$/, '');
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7088/chatHub", {
+        .withUrl(backendUrl + "/chatHub", {
             accessTokenFactory: () => token
         })
         .withAutomaticReconnect()

@@ -33,13 +33,17 @@ namespace WebMVC
                 });
 
             // Add Http Client for WebAPI
+            var internalApiUrl = builder.Configuration["WebAPI:InternalUrl"]
+                ?? builder.Configuration.GetConnectionString("WebAPI")
+                ?? "http://localhost:7088/";
+
             builder.Services.AddHttpClient<IAuthApiClient, AuthApiClient>(client =>
             {
-                client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("WebAPI")!);
+                client.BaseAddress = new Uri(internalApiUrl);
             });
             builder.Services.AddHttpClient<IUserApiClient, UserApiClient>(client =>
             {
-                client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("WebAPI")!);
+                client.BaseAddress = new Uri(internalApiUrl);
             });
 
             var app = builder.Build();
@@ -52,7 +56,10 @@ namespace WebMVC
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            if (!string.Equals(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER"), "true", StringComparison.OrdinalIgnoreCase))
+            {
+                app.UseHttpsRedirection();
+            }
             app.UseStaticFiles();
 
             app.UseRouting();

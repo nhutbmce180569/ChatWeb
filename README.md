@@ -258,10 +258,28 @@ dotnet run
 ```
 
 Sau khi khởi chạy thành công:
-- **API Swagger Documentation**: `https://localhost:<port>/swagger`
-- **SignalR Hub Endpoint**: `https://localhost:<port>/chatHub`
+- **API Swagger Documentation**: `http://localhost:7088/swagger`
+- **SignalR Hub Endpoint**: `http://localhost:7088/chatHub`
+
+### 🐳 Khởi chạy nhanh bằng Docker & Docker Compose
+Dự án đã được cấu hình sẵn Dockerfile cho cả WebAPI, WebMVC và Docker Compose kèm SQL Server 2022 tự động chạy kịch bản `db.sql`.
+
+Chạy toàn bộ hệ thống với 1 câu lệnh duy nhất tại thư mục gốc:
+
+```bash
+docker compose up -d --build
+```
+
+Sau khi các container khởi động:
+- **WebMVC (Frontend)**: `http://localhost:5036`
+- **WebAPI (Swagger Docs)**: `http://localhost:7088/swagger`
+- **SignalR Chat Hub**: `http://localhost:7088/chatHub`
+- **SQL Server**: `localhost:1433` (User: `sa`, Password: `Admin@123456`)
+
+*Lưu ý:* Để thay đổi URL backend cho frontend, bạn có thể chỉnh sửa trực tiếp biến môi trường `WebAPI__BaseUrl` trong file `docker-compose.yml` hoặc mục `WebAPI:BaseUrl` trong `MessageZ/WebMVC/appsettings.json`.
 
 ---
+
 
 ## 📡 7. Danh sách API chính (API Endpoints Overview)
 

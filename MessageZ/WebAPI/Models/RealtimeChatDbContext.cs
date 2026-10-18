@@ -27,13 +27,14 @@ public partial class RealtimeChatDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-
-        var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-        IConfiguration configuration = builder.Build();
-        optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-
+        if (!optionsBuilder.IsConfigured)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            IConfiguration configuration = builder.Build();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

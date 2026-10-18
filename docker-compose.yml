@@ -1,0 +1,99 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: messagez-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Admin@123456
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Admin@123456' -C -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    networks:
+      - messagez-network
+    restart: unless-stopped
+
+  db-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: messagez-db-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    volumes:
+      - ./db.sql:/db.sql:ro
+    networks:
+      - messagez-network
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        echo "Checking if database tables already exist..."
+        TABLE_EXISTS=$$(/opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P "Admin@123456" -C -Q "SET NOCOUNT ON; IF OBJECT_ID('RealtimeChatDb.dbo.Accounts', 'U') IS NOT NULL SELECT 1 ELSE SELECT 0" -h -1 | tr -d '[:space:]')
+        if [ "$$TABLE_EXISTS" = "1" ]; then
+          echo "Database tables already exist. Skipping db.sql."
+        else
+          echo "Running db.sql initialization script..."
+          /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P "Admin@123456" -C -i /db.sql
+          echo "Database initialized successfully!"
+        fi
+    restart: "no"
+
+  webapi:
+    build:
+      context: ./MessageZ/WebAPI
+      dockerfile: Dockerfile
+    container_name: messagez-webapi
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+    ports:
+      - "7088:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=RealtimeChatDb;User Id=sa;Password=Admin@123456;TrustServerCertificate=True;Encrypt=False;
+      - Jwt__Key=ThisIsMySuperSecretKeyForJwtTokenGeneration1234567890
+      - Jwt__Issuer=MessageZ
+      - Jwt__Audience=MessageZ
+      - Cloudinary__URL=CLOUDINARY_URL=cloudinary://322662568113119:zUuzX9bciojZX-3lLEu8qCRPKD0@dxgqfxbwv
+    networks:
+      - messagez-network
+    restart: unless-stopped
+
+  webmvc:
+    build:
+      context: ./MessageZ/WebMVC
+      dockerfile: Dockerfile
+    container_name: messagez-webmvc
+    depends_on:
+      webapi:
+        condition: service_started
+    ports:
+      - "5036:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      # Internal backend URL for C# server HttpClient calls (container-to-container)
+      - ConnectionStrings__WebAPI=http://webapi:8080/
+      - WebAPI__InternalUrl=http://webapi:8080/
+      # Public backend URL for browser JavaScript (SignalR hub & REST APIs)
+      - WebAPI__BaseUrl=http://localhost:7088
+    networks:
+      - messagez-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+
+networks:
+  messagez-network:
+    driver: bridge
