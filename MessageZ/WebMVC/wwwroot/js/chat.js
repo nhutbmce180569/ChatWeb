@@ -43,6 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
         initVideoEvents();
     }
 
+    // Mobile: Back button to return from active chat to conversation list
+    document.getElementById('btnBackToSidebar')?.addEventListener('click', function () {
+        const chatWrap = document.querySelector('.chat-wrap');
+        if (chatWrap) {
+            chatWrap.classList.remove('chat-active');
+        }
+        if (typeof pauseAllMedia === 'function') pauseAllMedia(null);
+    });
+
     // 4. Initialize SignalR connection & Load initial conversations
     initSignalR();
     loadConversations();
@@ -323,6 +332,8 @@ function initSignalR() {
                 chatMain.style.display = 'none';
             }
             if (noChat) noChat.classList.remove('d-none');
+            const chatWrap = document.querySelector('.chat-wrap');
+            if (chatWrap) chatWrap.classList.remove('chat-active');
             currentConversationId = null;
             currentConversation = null;
         }
@@ -620,6 +631,10 @@ async function selectConversation(conv) {
     if (chatMain) {
         chatMain.classList.remove('d-none');
         chatMain.style.display = 'flex';
+    }
+    const chatWrap = document.querySelector('.chat-wrap');
+    if (chatWrap) {
+        chatWrap.classList.add('chat-active');
     }
 
     const isGroup = conv.type === 2;
