@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +46,7 @@ public partial class RealtimeChatDbContext : DbContext
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.PasswordHash).HasMaxLength(500);
+            entity.Property(e => e.Role).HasMaxLength(20).HasDefaultValue("User");
         });
 
         modelBuilder.Entity<Conversation>(entity =>

@@ -40,4 +40,43 @@ public class AuthController : ControllerBase
 
         return Ok(new { message = result.Data });
     }
+
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _authService.ForgotPasswordAsync(request);
+        if (!result.Success)
+            return BadRequest(new { message = result.ErrorMessage, field = result.ErrorField });
+
+        return Ok(new { message = result.Data });
+    }
+
+    [HttpPost("verify-otp")]
+    public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _authService.VerifyOtpAsync(request);
+        if (!result.Success)
+            return BadRequest(new { message = result.ErrorMessage, field = result.ErrorField });
+
+        return Ok(new { message = result.Data });
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var result = await _authService.ResetPasswordAsync(request);
+        if (!result.Success)
+            return BadRequest(new { message = result.ErrorMessage, field = result.ErrorField });
+
+        return Ok(new { message = result.Data });
+    }
 }

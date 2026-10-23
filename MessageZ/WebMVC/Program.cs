@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using WebMVC.Services;
 using WebMVC.Services.Implements;
 
@@ -29,6 +29,7 @@ namespace WebMVC
                 {
                     options.LoginPath = "/Auth/Login";
                     options.LogoutPath = "/Auth/Logout";
+                    options.AccessDeniedPath = "/Home/Index";
                     options.ExpireTimeSpan = TimeSpan.FromDays(7);
                 });
 
@@ -41,7 +42,10 @@ namespace WebMVC
             {
                 client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("WebAPI")!);
             });
-
+            builder.Services.AddHttpClient<IAdminApiClient, AdminApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration.GetConnectionString("WebAPI")!);
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

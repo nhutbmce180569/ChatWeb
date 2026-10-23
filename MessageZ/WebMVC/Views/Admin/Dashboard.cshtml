@@ -1,0 +1,994 @@
+﻿@model WebMVC.DTOs.Admin.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_Layout";
+    var activeTab = (string?)TempData["ActiveTab"] ?? "overview";
+    if (!string.IsNullOrEmpty(Context.Request.Query["tab"].ToString()))
+        activeTab = Context.Request.Query["tab"].ToString();
+}
+
+@section Styles {
+<style>
+/* ── Admin Dashboard scoped styles ── */
+.adm-page {
+    padding: 28px 0px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ── Page header ── */
+.adm-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+.adm-header-left h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    margin: 0 0 4px;
+}
+.adm-header-left p {
+    font-size: 0.85rem;
+    color: var(--text-3);
+    margin: 0;
+}
+.adm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: #fff;
+    margin-bottom: 8px;
+}
+.adm-header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.adm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-2);
+    background: var(--surface);
+    color: var(--text-2);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+}
+.adm-btn:hover {
+    background: var(--surface-2);
+    color: var(--text);
+    text-decoration: none;
+}
+.adm-btn-primary {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    border-color: transparent;
+}
+.adm-btn-primary:hover {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+}
+
+/* ── Tab navigation ── */
+.adm-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+}
+.adm-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--text-3);
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+    margin-bottom: -1px;
+}
+.adm-tab:hover {
+    color: var(--text-2);
+    background: var(--surface-hover);
+    text-decoration: none;
+}
+.adm-tab.active {
+    color: var(--primary-2);
+    border-color: var(--border) var(--border) transparent;
+    border-bottom-color: var(--primary);
+    background: var(--surface);
+}
+.adm-tab-panel { display: none; }
+.adm-tab-panel.active { display: block; }
+
+/* ── KPI cards ── */
+.adm-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.adm-kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.adm-kpi:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+.adm-kpi-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.adm-kpi-label {
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-3);
+}
+.adm-kpi-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.adm-kpi-value {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text);
+    line-height: 1;
+}
+.adm-kpi-sub {
+    font-size: 0.75rem;
+    color: var(--text-3);
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* ── Stats chart placeholder ── */
+.adm-chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+@@media (max-width: 768px) {
+    .adm-chart-grid { grid-template-columns: 1fr; }
+}
+.adm-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+}
+.adm-card-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.adm-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+.adm-stat-row:last-child { border-bottom: none; }
+.adm-stat-label { font-size: 0.85rem; color: var(--text-2); }
+.adm-stat-val { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+
+/* ── Bar chart ── */
+.adm-bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 90px; }
+.adm-bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.adm-bar {
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    background: linear-gradient(180deg, #6366f1, #8b5cf6);
+    min-height: 4px;
+    transition: opacity 0.2s;
+}
+.adm-bar:hover { opacity: 0.8; }
+.adm-bar-day { font-size: 0.62rem; color: var(--text-3); }
+
+/* ── Mini pills ── */
+.pill-success {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.72rem; font-weight: 600;
+    padding: 3px 8px; border-radius: 20px;
+    background: rgba(16,185,129,0.12);
+    color: var(--green);
+}
+.pill-danger {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.72rem; font-weight: 600;
+    padding: 3px 8px; border-radius: 20px;
+    background: rgba(244,63,94,0.12);
+    color: var(--red);
+}
+.pill-admin {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 0.72rem; font-weight: 600;
+    padding: 3px 8px; border-radius: 20px;
+    background: rgba(99,102,241,0.14);
+    color: var(--primary-2);
+    border: 1px solid rgba(99,102,241,0.25);
+}
+.pill-user {
+    display: inline-flex; align-items: center;
+    font-size: 0.72rem; font-weight: 500;
+    padding: 3px 8px; border-radius: 20px;
+    background: var(--surface-2);
+    color: var(--text-3);
+    border: 1px solid var(--border);
+}
+.pill-online {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--green);
+}
+.pulse-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse-anim 1.8s infinite;
+}
+@@keyframes pulse-anim {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ── Filter bar ── */
+.adm-filter-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.adm-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 7px 12px;
+    flex: 1;
+    min-width: 180px;
+}
+.adm-search-wrap input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 0.85rem;
+    width: 100%;
+}
+.adm-search-wrap input::placeholder { color: var(--text-4); }
+.adm-select {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 7px 12px;
+    color: var(--text-2);
+    font-size: 0.83rem;
+    outline: none;
+    cursor: pointer;
+    min-width: 120px;
+}
+.adm-filter-actions { display: flex; gap: 8px; }
+
+/* ── Users table ── */
+.adm-table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+}
+.adm-table-head {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.adm-table-head h2 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+.adm-count-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--surface-2);
+    color: var(--text-3);
+    border: 1px solid var(--border);
+    margin-left: 8px;
+}
+.adm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    color: var(--text-2);
+}
+.adm-table thead tr {
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+}
+.adm-table thead th {
+    padding: 10px 16px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-3);
+    white-space: nowrap;
+    text-align: left;
+}
+.adm-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+}
+.adm-table tbody tr:last-child { border-bottom: none; }
+.adm-table tbody tr:hover { background: var(--surface-hover); }
+.adm-table td { padding: 12px 16px; vertical-align: middle; }
+.adm-user-info { display: flex; align-items: center; gap: 12px; }
+.adm-avatar {
+    position: relative;
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.95rem; color: #fff;
+    overflow: visible;
+}
+.adm-avatar img {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+.adm-online-dot {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--surface);
+}
+.adm-user-name { font-weight: 600; color: var(--text); font-size: 0.88rem; }
+.adm-user-handle { font-size: 0.75rem; color: var(--text-3); }
+.adm-email { font-size: 0.8rem; color: var(--text-3); font-family: monospace; }
+.adm-joined { font-size: 0.78rem; color: var(--text-3); }
+
+/* ── Action buttons ── */
+.adm-actions { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; }
+.adm-action-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.73rem; font-weight: 600;
+    padding: 5px 10px; border-radius: 8px;
+    border: 1px solid var(--border-2);
+    background: var(--surface-2);
+    color: var(--text-2);
+    cursor: pointer; white-space: nowrap;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.adm-action-btn:hover { background: var(--surface-3); color: var(--text); }
+.adm-action-ban {
+    border-color: rgba(244,63,94,0.35);
+    color: var(--red);
+    background: rgba(244,63,94,0.06);
+}
+.adm-action-ban:hover { background: rgba(244,63,94,0.14); }
+.adm-action-activate {
+    border-color: rgba(16,185,129,0.35);
+    color: var(--green);
+    background: rgba(16,185,129,0.06);
+}
+.adm-action-activate:hover { background: rgba(16,185,129,0.14); }
+.adm-action-admin {
+    border-color: rgba(99,102,241,0.35);
+    color: var(--primary-2);
+    background: rgba(99,102,241,0.06);
+}
+.adm-action-admin:hover { background: rgba(99,102,241,0.14); }
+
+/* Dropdown override */
+.adm-dropdown-menu {
+    background: var(--surface);
+    border: 1px solid var(--border-2);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: var(--shadow-md);
+    min-width: 170px;
+}
+.adm-dropdown-menu .dropdown-item {
+    color: var(--text-2);
+    font-size: 0.82rem;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+.adm-dropdown-menu .dropdown-item:hover {
+    background: var(--surface-2);
+    color: var(--text);
+}
+.adm-dropdown-menu .dropdown-item.active {
+    background: rgba(99,102,241,0.12);
+    color: var(--primary-2);
+}
+
+/* ── Pagination ── */
+.adm-pagination {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.adm-pagination-info { font-size: 0.78rem; color: var(--text-3); }
+.adm-page-btns { display: flex; gap: 4px; }
+.adm-page-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text-2);
+    font-size: 0.82rem; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+.adm-page-btn:hover { background: var(--surface-3); color: var(--text); text-decoration: none; }
+.adm-page-btn.active {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    border-color: transparent;
+}
+.adm-page-btn.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Empty state */
+.adm-empty {
+    padding: 52px 20px;
+    text-align: center;
+    color: var(--text-3);
+}
+.adm-empty svg { opacity: 0.35; margin-bottom: 12px; }
+.adm-empty p { font-size: 0.88rem; margin: 0; }
+
+/* Responsive */
+@@media (max-width: 768px) {
+    .adm-table thead th:nth-child(4),
+    .adm-table td:nth-child(4),
+    .adm-table thead th:nth-child(5),
+    .adm-table td:nth-child(5),
+    .adm-table thead th:nth-child(6),
+    .adm-table td:nth-child(6) { display: none; }
+}
+</style>
+}
+
+<div class="adm-page">
+
+    <!-- ── Header ── -->
+    <div class="adm-header">
+        <div class="adm-header-left">
+            <div class="adm-badge">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                ADMIN CONSOLE
+            </div>
+            <h1>Admin Dashboard</h1>
+            <p>Monitor platform activity, manage users and assign roles.</p>
+        </div>
+        <div class="adm-header-actions">
+            <a asp-controller="Chat" asp-action="Index" class="adm-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Back to Chat
+            </a>
+            <button onclick="window.location.reload();" class="adm-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                Refresh
+            </button>
+        </div>
+    </div>
+
+    <!-- ── Tab Navigation ── -->
+    <div class="adm-tabs">
+        <a href="?tab=overview" class="adm-tab @(activeTab == "overview" ? "active" : "")">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Overview
+        </a>
+        <a href="?tab=users&search=@Model.Search&role=@Model.RoleFilter&status=@Model.StatusFilter" class="adm-tab @(activeTab == "users" ? "active" : "")">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            User Management
+            <span class="adm-count-badge" style="margin-left:0;">@Model.Users.TotalCount</span>
+        </a>
+    </div>
+
+    <!-- ══════════════════ TAB: OVERVIEW ══════════════════ -->
+    <div class="adm-tab-panel @(activeTab == "overview" ? "active" : "")">
+
+        <!-- KPI Cards -->
+        <div class="adm-kpi-grid">
+            <!-- Total Users -->
+            <div class="adm-kpi">
+                <div class="adm-kpi-header">
+                    <span class="adm-kpi-label">Total Users</span>
+                    <div class="adm-kpi-icon" style="background:rgba(99,102,241,0.12);color:var(--primary-2);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                </div>
+                <div class="adm-kpi-value">@Model.Stats.TotalUsers</div>
+                <div class="adm-kpi-sub">
+                    <span class="pill-success">@Model.Stats.ActiveUsers Active</span>
+                    <span class="pill-danger">@Model.Stats.BannedUsers Disabled</span>
+                </div>
+            </div>
+
+            <!-- Online Now -->
+            <div class="adm-kpi">
+                <div class="adm-kpi-header">
+                    <span class="adm-kpi-label">Online Now</span>
+                    <div class="adm-kpi-icon" style="background:rgba(16,185,129,0.12);color:var(--green);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:10px;">
+                    <div class="adm-kpi-value">@Model.Stats.OnlineUsers</div>
+                    <span class="pill-online"><span class="pulse-dot"></span>Live</span>
+                </div>
+                <div class="adm-kpi-sub">Active WebSocket connections</div>
+            </div>
+
+            <!-- Conversations -->
+            <div class="adm-kpi">
+                <div class="adm-kpi-header">
+                    <span class="adm-kpi-label">Conversations</span>
+                    <div class="adm-kpi-icon" style="background:rgba(34,211,238,0.12);color:var(--cyan);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    </div>
+                </div>
+                <div class="adm-kpi-value">@Model.Stats.TotalConversations</div>
+                <div class="adm-kpi-sub">Direct &amp; Group Rooms</div>
+            </div>
+
+            <!-- Messages -->
+            <div class="adm-kpi">
+                <div class="adm-kpi-header">
+                    <span class="adm-kpi-label">Total Messages</span>
+                    <div class="adm-kpi-icon" style="background:rgba(245,158,11,0.12);color:var(--amber);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </div>
+                </div>
+                <div class="adm-kpi-value">@Model.Stats.TotalMessages</div>
+                <div class="adm-kpi-sub">Across all conversations</div>
+            </div>
+        </div>
+
+        <!-- Charts row -->
+        <div class="adm-chart-grid">
+
+            <!-- Platform Summary card -->
+            <div class="adm-card">
+                <div class="adm-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                    Platform Summary
+                </div>
+                <div class="adm-stat-row">
+                    <span class="adm-stat-label">Total Accounts</span>
+                    <span class="adm-stat-val">@Model.Stats.TotalUsers</span>
+                </div>
+                <div class="adm-stat-row">
+                    <span class="adm-stat-label">Active Accounts</span>
+                    <span class="adm-stat-val" style="color:var(--green);">@Model.Stats.ActiveUsers</span>
+                </div>
+                <div class="adm-stat-row">
+                    <span class="adm-stat-label">Disabled / Banned</span>
+                    <span class="adm-stat-val" style="color:var(--red);">@Model.Stats.BannedUsers</span>
+                </div>
+                <div class="adm-stat-row">
+                    <span class="adm-stat-label">Administrators</span>
+                    <span class="adm-stat-val" style="color:var(--primary-2);">@Model.Stats.TotalAdmins</span>
+                </div>
+                <div class="adm-stat-row">
+                    <span class="adm-stat-label">Online Right Now</span>
+                    <span class="adm-stat-val" style="color:var(--green);">
+                        @Model.Stats.OnlineUsers
+                        <span class="pulse-dot" style="display:inline-block;margin-left:5px;"></span>
+                    </span>
+                </div>
+                <div class="adm-stat-row">
+                    <span class="adm-stat-label">Total Conversations</span>
+                    <span class="adm-stat-val">@Model.Stats.TotalConversations</span>
+                </div>
+                <div class="adm-stat-row">
+                    <span class="adm-stat-label">Total Messages</span>
+                    <span class="adm-stat-val">@Model.Stats.TotalMessages</span>
+                </div>
+            </div>
+
+            <!-- Registration trend – last 7 days -->
+            <div class="adm-card">
+                <div class="adm-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    Registrations – Last 7 Days
+                </div>
+                @{
+                    var maxReg = Model.Stats.RecentRegistrations.Count > 0
+                        ? Model.Stats.RecentRegistrations.Max(r => r.Count)
+                        : 1;
+                    if (maxReg == 0) maxReg = 1;
+                }
+                <div class="adm-bar-chart">
+                    @foreach (var day in Model.Stats.RecentRegistrations)
+                    {
+                        var pct = (double)day.Count / maxReg * 100;
+                        var heightPx = Math.Max(4, (int)(pct * 0.85));
+                        var label = DateTime.TryParse(day.Date, out var dt) ? dt.ToString("dd/M") : day.Date;
+                        <div class="adm-bar-col" title="@label: @day.Count new users">
+                            <div class="adm-bar" style="height:@(heightPx)px;"></div>
+                            <span class="adm-bar-day">@label</span>
+                        </div>
+                    }
+                </div>
+                <div style="margin-top:12px;font-size:0.78rem;color:var(--text-3);">
+                    Total new this week:
+                    <strong style="color:var(--text);">@Model.Stats.RecentRegistrations.Sum(r => r.Count)</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Quick navigate to users -->
+        <div style="text-align:center;padding:8px 0 4px;">
+            <a href="?tab=users" class="adm-btn adm-btn-primary" style="padding:10px 24px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Manage Users →
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ══════════════════ TAB: USERS ══════════════════ -->
+    <div class="adm-tab-panel @(activeTab == "users" ? "active" : "")">
+
+        <!-- Filter bar -->
+        <form method="get" asp-action="Dashboard" class="adm-filter-bar">
+            <input type="hidden" name="tab" value="users" />
+
+            <div class="adm-search-wrap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-3);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" name="search" placeholder="Search name, username, email…" value="@Model.Search" />
+            </div>
+
+            <select name="role" class="adm-select">
+                <option value="All" selected="@(Model.RoleFilter == "All" || string.IsNullOrEmpty(Model.RoleFilter))">All Roles</option>
+                <option value="Admin" selected="@(Model.RoleFilter == "Admin")">Admin</option>
+                <option value="User" selected="@(Model.RoleFilter == "User")">User</option>
+            </select>
+
+            <select name="status" class="adm-select">
+                <option value="All" selected="@(Model.StatusFilter == "All" || string.IsNullOrEmpty(Model.StatusFilter))">All Status</option>
+                <option value="Active" selected="@(Model.StatusFilter == "Active")">Active</option>
+                <option value="Disabled" selected="@(Model.StatusFilter == "Disabled")">Disabled</option>
+            </select>
+
+            <div class="adm-filter-actions">
+                <button type="submit" class="adm-btn adm-btn-primary" style="padding:7px 16px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Filter
+                </button>
+                @if (!string.IsNullOrEmpty(Model.Search) ||
+                     (!string.IsNullOrEmpty(Model.RoleFilter) && Model.RoleFilter != "All") ||
+                     (!string.IsNullOrEmpty(Model.StatusFilter) && Model.StatusFilter != "All"))
+                {
+                    <a href="?tab=users" class="adm-btn" style="padding:7px 14px;">Clear</a>
+                }
+            </div>
+        </form>
+
+        <!-- Users table -->
+        <div class="adm-table-wrap">
+            <div class="adm-table-head">
+                <h2>
+                    Accounts
+                    <span class="adm-count-badge">@Model.Users.TotalCount total</span>
+                </h2>
+                <span style="font-size:0.78rem;color:var(--text-3);">
+                    Page @Model.Users.Page / @(Math.Max(Model.Users.TotalPages, 1))
+                </span>
+            </div>
+
+            <div style="overflow-x:auto;">
+                <table class="adm-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th style="text-align:center;">Role</th>
+                            <th style="text-align:center;">Status</th>
+                            <th style="text-align:center;">Presence</th>
+                            <th>Joined</th>
+                            <th style="text-align:right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Users.Items.Any())
+                        {
+                            <tr>
+                                <td colspan="7">
+                                    <div class="adm-empty">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                        <p>No users found matching the given filters.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var user in Model.Users.Items)
+                        {
+                            var isAdmin = string.Equals(user.Role, "Admin", StringComparison.OrdinalIgnoreCase);
+                            var isMe = User.FindFirst("AccountId")?.Value == user.AccountId.ToString();
+                            var initials = string.IsNullOrEmpty(user.DisplayName) ? "U" : user.DisplayName.Substring(0, 1).ToUpper();
+
+                            <tr id="user-row-@user.AccountId">
+                                <!-- User info -->
+                                <td>
+                                    <div class="adm-user-info">
+                                        <div class="adm-avatar">
+                                            @if (!string.IsNullOrEmpty(user.AvatarUrl))
+                                            {
+                                                <img src="@user.AvatarUrl" alt="@user.DisplayName" />
+                                            }
+                                            else
+                                            {
+                                                @initials
+                                            }
+                                            @if (user.IsOnline)
+                                            {
+                                                <span class="adm-online-dot" title="Online"></span>
+                                            }
+                                        </div>
+                                        <div>
+                                            <div class="adm-user-name">
+                                                @user.DisplayName
+                                                @if (isMe) { <span class="pill-user" style="font-size:0.65rem;padding:2px 6px;margin-left:4px;">You</span> }
+                                            </div>
+                                            <div class="adm-user-handle">@@@user.Username</div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!-- Email -->
+                                <td><span class="adm-email">@user.Email</span></td>
+
+                                <!-- Role -->
+                                <td style="text-align:center;">
+                                    @if (isAdmin)
+                                    {
+                                        <span class="pill-admin">👑 Admin</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="pill-user">User</span>
+                                    }
+                                </td>
+
+                                <!-- Status -->
+                                <td style="text-align:center;">
+                                    @if (user.IsActive)
+                                    {
+                                        <span class="pill-success">● Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="pill-danger">✕ Disabled</span>
+                                    }
+                                </td>
+
+                                <!-- Presence -->
+                                <td style="text-align:center;">
+                                    @if (user.IsOnline)
+                                    {
+                                        <span class="pill-online"><span class="pulse-dot"></span>Online</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="font-size:0.78rem;color:var(--text-3);">
+                                            @(user.LastSeenAt.HasValue ? user.LastSeenAt.Value.ToString("dd/MM HH:mm") : "Offline")
+                                        </span>
+                                    }
+                                </td>
+
+                                <!-- Joined -->
+                                <td><span class="adm-joined">@user.CreatedAt.ToString("yyyy-MM-dd")</span></td>
+
+                                <!-- Actions -->
+                                <td>
+                                    <div class="adm-actions">
+                                        @if (!isMe)
+                                        {
+                                            <!-- Role dropdown -->
+                                            <div class="dropdown">
+                                                <button class="adm-action-btn adm-action-admin dropdown-toggle"
+                                                        type="button"
+                                                        data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                    Role
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end adm-dropdown-menu">
+                                                    <li>
+                                                        <button class="dropdown-item @(isAdmin ? "active" : "")" type="button"
+                                                                onclick="changeRole('@user.AccountId', 'Admin', '@user.Username')">
+                                                            👑 Set Admin
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="dropdown-item @(!isAdmin ? "active" : "")" type="button"
+                                                                onclick="changeRole('@user.AccountId', 'User', '@user.Username')">
+                                                            👤 Set Standard User
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <!-- Ban / Activate -->
+                                            @if (user.IsActive)
+                                            {
+                                                <button class="adm-action-btn adm-action-ban" type="button"
+                                                        onclick="toggleStatus('@user.AccountId', false, '@user.Username')" title="Disable account">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                                                    Disable
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button class="adm-action-btn adm-action-activate" type="button"
+                                                        onclick="toggleStatus('@user.AccountId', true, '@user.Username')" title="Activate account">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                                    Activate
+                                                </button>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span style="font-size:0.75rem;color:var(--text-3);padding:4px 8px;">(You)</span>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            @if (Model.Users.TotalPages > 1)
+            {
+                <div class="adm-pagination">
+                    <span class="adm-pagination-info">
+                        Showing page @Model.Users.Page of @Model.Users.TotalPages
+                        (@Model.Users.TotalCount total accounts)
+                    </span>
+                    <div class="adm-page-btns">
+                        @{
+                            var q = $"tab=users&search={Model.Search}&role={Model.RoleFilter}&status={Model.StatusFilter}";
+                        }
+                        <a class="adm-page-btn @(Model.Users.Page <= 1 ? "disabled" : "")"
+                           href="?@q&page=@(Model.Users.Page - 1)" aria-label="Previous">‹</a>
+
+                        @for (var p = 1; p <= Model.Users.TotalPages; p++)
+                        {
+                            <a class="adm-page-btn @(Model.Users.Page == p ? "active" : "")"
+                               href="?@q&page=@p">@p</a>
+                        }
+
+                        <a class="adm-page-btn @(Model.Users.Page >= Model.Users.TotalPages ? "disabled" : "")"
+                           href="?@q&page=@(Model.Users.Page + 1)" aria-label="Next">›</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+<script>
+async function toggleStatus(accountId, makeActive, username) {
+    const action = makeActive ? 'ACTIVATE' : 'DISABLE';
+    if (!confirm(`Are you sure you want to ${action} the account of "${username}"?`)) return;
+
+    try {
+        const res = await fetch('@Url.Action("UpdateStatus", "Admin")', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ accountId, isActive: makeActive })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+            if (typeof showToast === 'function') showToast(data.message || 'Updated!', 'success');
+            setTimeout(() => window.location.reload(), 700);
+        } else {
+            if (typeof showToast === 'function') showToast(data.message || 'Error', 'error');
+            else alert(data.message || 'Failed to update status.');
+        }
+    } catch { alert('Network error while updating user status.'); }
+}
+
+async function changeRole(accountId, newRole, username) {
+    if (!confirm(`Change role for "${username}" to "${newRole}"?`)) return;
+
+    try {
+        const res = await fetch('@Url.Action("UpdateRole", "Admin")', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ accountId, role: newRole })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+            if (typeof showToast === 'function') showToast(data.message || 'Role updated!', 'success');
+            setTimeout(() => window.location.reload(), 700);
+        } else {
+            if (typeof showToast === 'function') showToast(data.message || 'Error', 'error');
+            else alert(data.message || 'Failed to update role.');
+        }
+    } catch { alert('Network error while updating role.'); }
+}
+</script>
+}

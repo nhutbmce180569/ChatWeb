@@ -1,4 +1,4 @@
-USE master;
+﻿USE master;
 GO
 
 -- =============================================
@@ -38,6 +38,9 @@ CREATE TABLE dbo.Accounts
 
     Email NVARCHAR(255) NOT NULL,
     PasswordHash NVARCHAR(500) NOT NULL,
+
+    Role NVARCHAR(20) NOT NULL
+        CONSTRAINT DF_Accounts_Role DEFAULT 'User',
 
     IsActive BIT NOT NULL
         CONSTRAINT DF_Accounts_IsActive DEFAULT 1,

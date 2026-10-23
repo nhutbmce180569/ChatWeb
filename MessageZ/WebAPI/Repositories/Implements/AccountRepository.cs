@@ -28,4 +28,9 @@ public class AccountRepository : IAccountRepository
     {
         await _context.Accounts.AddAsync(account);
     }
+
+    public void Update(Account account)
+    {
+        _context.Accounts.Update(account);
+    }
 }
