@@ -1,7 +1,172 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\MessageZ\\MessageZ\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\chat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\chat.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\global-signalr.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\global-signalr.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\services\\implements\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\implements\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\hubs\\customuseridprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\hubs\\customuseridprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\chat-voice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\chat-voice.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\chat-video.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\chat-video.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\chat-group.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\chat-group.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\chat-attachments.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\chat-attachments.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\webrtc.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\webrtc.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\controllers\\chatcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\services\\implements\\userapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\services\\implements\\userapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\services\\implements\\authapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\services\\implements\\authapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\services\\implements\\photoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\implements\\photoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\toast-notification.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\toast-notification.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\views\\shared\\_chatlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\views\\shared\\_chatlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\services\\iadminapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\services\\iadminapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\services\\iuserapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\services\\iuserapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\views\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\views\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\views\\auth\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\views\\auth\\resetpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\views\\chat\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\views\\chat\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\views\\shared\\_callmodal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\views\\shared\\_callmodal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\services\\implements\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\implements\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\dtos\\auth\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\dtos\\auth\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\mappers\\authmapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\mappers\\authmapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\models\\realtimechatdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\models\\realtimechatdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\repositories\\implements\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\repositories\\implements\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|e:\\messagez\\messagez\\webmvc\\wwwroot\\js\\theme-toggle.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{7942C4A1-582B-4B55-861A-3A80F06C2A8D}|WebMVC\\WebMVC.csproj|solutionrelative:webmvc\\wwwroot\\js\\theme-toggle.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|e:\\messagez\\messagez\\webapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8904C09F-A1BE-4D1D-AF91-4EEC5B1DD700}|WebAPI\\WebAPI.csproj|solutionrelative:webapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +174,515 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "chat.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\chat.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\chat.js",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAlwKIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:38:25.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "global-signalr.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\global-signalr.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\global-signalr.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\global-signalr.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\global-signalr.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:40:48.843Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "chat-video.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat-video.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\chat-video.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat-video.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\chat-video.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:41:44.126Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "chat-voice.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat-voice.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\chat-voice.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat-voice.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\chat-voice.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:38:15.313Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Program.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Program.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Program.cs",
+              "RelativeToolTip": "WebAPI\\Program.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAQwGQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:43:09.217Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "site.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\site.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\site.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\site.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\site.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:41:45.472Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Hubs\\ChatHub.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Hubs\\ChatHub.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Hubs\\ChatHub.cs",
+              "RelativeToolTip": "WebAPI\\Hubs\\ChatHub.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:45:34.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CustomUserIdProvider.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Hubs\\CustomUserIdProvider.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Hubs\\CustomUserIdProvider.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Hubs\\CustomUserIdProvider.cs",
+              "RelativeToolTip": "WebAPI\\Hubs\\CustomUserIdProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:56:51.372Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Services\\Implements\\AuthService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\Implements\\AuthService.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Services\\Implements\\AuthService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\Implements\\AuthService.cs",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:45:20.729Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "chat-group.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat-group.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\chat-group.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat-group.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\chat-group.js",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:59:20.979Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "webrtc.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\webrtc.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\webrtc.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\webrtc.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\webrtc.js",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:38:18.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ChatController.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Controllers\\ChatController.cs",
+              "RelativeDocumentMoniker": "WebMVC\\Controllers\\ChatController.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Controllers\\ChatController.cs",
+              "RelativeToolTip": "WebMVC\\Controllers\\ChatController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:57:40.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "WebMVC\\Controllers\\AuthController.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "WebMVC\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:57:40.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UserApiClient.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Services\\Implements\\UserApiClient.cs",
+              "RelativeDocumentMoniker": "WebMVC\\Services\\Implements\\UserApiClient.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Services\\Implements\\UserApiClient.cs",
+              "RelativeToolTip": "WebMVC\\Services\\Implements\\UserApiClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:57:26.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "chat-attachments.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat-attachments.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\chat-attachments.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\chat-attachments.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\chat-attachments.js",
+              "ViewState": "AgIAAJsAAAAAAAAAAAAgwKsAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:41:42.843Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "WebAPI\\appsettings.json",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\appsettings.json",
+              "RelativeToolTip": "WebAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-23T12:54:33.02Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Program.cs",
+              "RelativeDocumentMoniker": "WebMVC\\Program.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Program.cs",
+              "RelativeToolTip": "WebMVC\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:01:36.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\appsettings.json",
+              "RelativeDocumentMoniker": "WebMVC\\appsettings.json",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\appsettings.json",
+              "RelativeToolTip": "WebMVC\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-10-23T14:01:36.087Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AuthApiClient.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Services\\Implements\\AuthApiClient.cs",
+              "RelativeDocumentMoniker": "WebMVC\\Services\\Implements\\AuthApiClient.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Services\\Implements\\AuthApiClient.cs",
+              "RelativeToolTip": "WebMVC\\Services\\Implements\\AuthApiClient.cs",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:01:50.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "PhotoService.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Services\\Implements\\PhotoService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\Implements\\PhotoService.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Services\\Implements\\PhotoService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\Implements\\PhotoService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:56:22.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "toast-notification.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\toast-notification.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\toast-notification.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\toast-notification.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\toast-notification.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:41:48.707Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "_ChatLayout.cshtml",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Shared\\_ChatLayout.cshtml",
+              "RelativeDocumentMoniker": "WebMVC\\Views\\Shared\\_ChatLayout.cshtml",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Shared\\_ChatLayout.cshtml",
+              "RelativeToolTip": "WebMVC\\Views\\Shared\\_ChatLayout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-23T14:46:36.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "WebMVC\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "WebMVC\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-23T14:46:23.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IAdminApiClient.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Services\\IAdminApiClient.cs",
+              "RelativeDocumentMoniker": "WebMVC\\Services\\IAdminApiClient.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Services\\IAdminApiClient.cs",
+              "RelativeToolTip": "WebMVC\\Services\\IAdminApiClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:01:55.155Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "IUserApiClient.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Services\\IUserApiClient.cs",
+              "RelativeDocumentMoniker": "WebMVC\\Services\\IUserApiClient.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Services\\IUserApiClient.cs",
+              "RelativeToolTip": "WebMVC\\Services\\IUserApiClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:46:59.686Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ResetPassword.cshtml",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Auth\\ResetPassword.cshtml",
+              "RelativeDocumentMoniker": "WebMVC\\Views\\Auth\\ResetPassword.cshtml",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Auth\\ResetPassword.cshtml",
+              "RelativeToolTip": "WebMVC\\Views\\Auth\\ResetPassword.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-23T14:46:55.96Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Chat\\Index.cshtml",
+              "RelativeDocumentMoniker": "WebMVC\\Views\\Chat\\Index.cshtml",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Chat\\Index.cshtml",
+              "RelativeToolTip": "WebMVC\\Views\\Chat\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-23T14:46:54.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Privacy.cshtml",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Home\\Privacy.cshtml",
+              "RelativeDocumentMoniker": "WebMVC\\Views\\Home\\Privacy.cshtml",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Home\\Privacy.cshtml",
+              "RelativeToolTip": "WebMVC\\Views\\Home\\Privacy.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-23T14:46:53.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "_CallModal.cshtml",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Shared\\_CallModal.cshtml",
+              "RelativeDocumentMoniker": "WebMVC\\Views\\Shared\\_CallModal.cshtml",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Shared\\_CallModal.cshtml",
+              "RelativeToolTip": "WebMVC\\Views\\Shared\\_CallModal.cshtml",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-23T14:46:45.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Admin\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "WebMVC\\Views\\Admin\\Dashboard.cshtml",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\Views\\Admin\\Dashboard.cshtml",
+              "RelativeToolTip": "WebMVC\\Views\\Admin\\Dashboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-23T14:33:26.133Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Services\\Implements\\EmailService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\Implements\\EmailService.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Services\\Implements\\EmailService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\Implements\\EmailService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:46:16.139Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "AuthDtos.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\DTOs\\Auth\\AuthDtos.cs",
+              "RelativeDocumentMoniker": "WebAPI\\DTOs\\Auth\\AuthDtos.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\DTOs\\Auth\\AuthDtos.cs",
+              "RelativeToolTip": "WebAPI\\DTOs\\Auth\\AuthDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:46:02.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\AdminController.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:45:55.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "WebAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:45:54.749Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Services\\IAuthService.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Services\\IAuthService.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Services\\IAuthService.cs",
+              "RelativeToolTip": "WebAPI\\Services\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T13:18:42.373Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "AuthMapperProfile.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Mappers\\AuthMapperProfile.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Mappers\\AuthMapperProfile.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Mappers\\AuthMapperProfile.cs",
+              "RelativeToolTip": "WebAPI\\Mappers\\AuthMapperProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:45:46.902Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "AccountRepository.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Repositories\\Implements\\AccountRepository.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Repositories\\Implements\\AccountRepository.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Repositories\\Implements\\AccountRepository.cs",
+              "RelativeToolTip": "WebAPI\\Repositories\\Implements\\AccountRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T14:45:43.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "theme-toggle.js",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\theme-toggle.js",
+              "RelativeDocumentMoniker": "WebMVC\\wwwroot\\js\\theme-toggle.js",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebMVC\\wwwroot\\js\\theme-toggle.js",
+              "RelativeToolTip": "WebMVC\\wwwroot\\js\\theme-toggle.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-10-23T14:41:47.811Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "RealtimeChatDbContext.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Models\\RealtimeChatDbContext.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Models\\RealtimeChatDbContext.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Models\\RealtimeChatDbContext.cs",
+              "RelativeToolTip": "WebAPI\\Models\\RealtimeChatDbContext.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAADwvzIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T13:59:06.059Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -22,6 +694,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "User.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Models\\User.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Models\\User.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Models\\User.cs",
+              "RelativeToolTip": "WebAPI\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T13:20:35.911Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Account.cs",
+              "DocumentMoniker": "E:\\MessageZ\\MessageZ\\WebAPI\\Models\\Account.cs",
+              "RelativeDocumentMoniker": "WebAPI\\Models\\Account.cs",
+              "ToolTip": "E:\\MessageZ\\MessageZ\\WebAPI\\Models\\Account.cs",
+              "RelativeToolTip": "WebAPI\\Models\\Account.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA1wBYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-23T13:20:32.698Z",
+              "EditorCaption": ""
             }
           ]
         }

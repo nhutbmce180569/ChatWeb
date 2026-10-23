@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -31,6 +31,11 @@ namespace WebAPI
             {
                 mc.AddProfile(new AuthMapperProfile());
             });
+
+            // Add MemoryCache & OTP / Email Services
+            builder.Services.AddMemoryCache();
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddSingleton<IOtpService, OtpService>();
 
             // Add Repositories & Services
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -71,6 +76,7 @@ namespace WebAPI
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
+                        RoleClaimType = System.Security.Claims.ClaimTypes.Role,
                         ValidIssuer = builder.Configuration["Jwt:Issuer"],
                         ValidAudience = builder.Configuration["Jwt:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
@@ -98,8 +104,7 @@ namespace WebAPI
             {
                 options.AddPolicy("AllowAll", builder =>
                 {
-                    builder.WithOrigins("https://localhost:7265", "http://localhost:5036") // WebMVC ports
-                           .SetIsOriginAllowed(origin => true) // allow any origin
+                    builder.SetIsOriginAllowed(origin => true) // allow any origin
                            .AllowAnyMethod()
                            .AllowAnyHeader()
                            .AllowCredentials();

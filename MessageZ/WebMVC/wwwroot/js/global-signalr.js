@@ -13,7 +13,7 @@
     }
 
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7088/chatHub", {
+        .withUrl("https://5tzv6cx5-7088.asse.devtunnels.ms/chatHub", {
             accessTokenFactory: () => token
         })
         .withAutomaticReconnect()

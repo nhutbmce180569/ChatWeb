@@ -69,18 +69,96 @@ public class AuthApiClient : IAuthApiClient
             };
 
             var response = await _httpClient.PostAsJsonAsync("api/auth/register", apiPayload);
+            return await ParseResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return new AuthActionResult
+            {
+                Success = false,
+                Message = "Unable to connect to authentication server. Please try again."
+            };
+        }
+    }
 
-            if (response.IsSuccessStatusCode)
+    public async Task<AuthActionResult> ForgotPasswordAsync(string email)
+    {
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/auth/forgot-password", new { email });
+            return await ParseResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return new AuthActionResult
+            {
+                Success = false,
+                Message = "Unable to connect to authentication server. Please try again."
+            };
+        }
+    }
+
+    public async Task<AuthActionResult> VerifyOtpAsync(string email, string otp)
+    {
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/auth/verify-otp", new { email, otp });
+            return await ParseResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return new AuthActionResult
+            {
+                Success = false,
+                Message = "Unable to connect to authentication server. Please try again."
+            };
+        }
+    }
+
+    public async Task<AuthActionResult> ResetPasswordAsync(string email, string otp, string newPassword)
+    {
+        try
+        {
+            var response = await _httpClient.PostAsJsonAsync("api/auth/reset-password", new
+            {
+                email,
+                otp,
+                newPassword
+            });
+            return await ParseResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return new AuthActionResult
+            {
+                Success = false,
+                Message = "Unable to connect to authentication server. Please try again."
+            };
+        }
+    }
+
+    private static async Task<AuthActionResult> ParseResponseAsync(HttpResponseMessage response)
+    {
+        if (response.IsSuccessStatusCode)
+        {
+            try
             {
                 var okBody = await response.Content.ReadFromJsonAsync<JsonElement>();
                 string? msg = okBody.TryGetProperty("message", out var m) ? m.GetString() : null;
                 return new AuthActionResult { Success = true, Message = msg };
             }
+            catch
+            {
+                return new AuthActionResult { Success = true };
+            }
+        }
 
-            var result = new AuthActionResult { Success = false };
-            var content = await response.Content.ReadAsStringAsync();
+        var result = new AuthActionResult { Success = false };
+        var content = await response.Content.ReadAsStringAsync();
 
-            if (!string.IsNullOrWhiteSpace(content))
+        if (!string.IsNullOrWhiteSpace(content))
+        {
+            try
             {
                 using var doc = JsonDocument.Parse(content);
                 var root = doc.RootElement;
@@ -113,16 +191,9 @@ public class AuthApiClient : IAuthApiClient
                     result.Field = fieldProp.GetString();
                 }
             }
+            catch { }
+        }
 
-            return result;
-        }
-        catch (Exception)
-        {
-            return new AuthActionResult
-            {
-                Success = false,
-                Message = "Unable to connect to authentication server. Please try again."
-            };
-        }
+        return result;
     }
 }

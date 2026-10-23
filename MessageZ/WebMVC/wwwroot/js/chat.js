@@ -5,7 +5,7 @@
 
 var token = window.appData?.token;
 var currentUserId = window.appData?.userId;
-var API_BASE_URL = 'https://localhost:7088/api';
+var API_BASE_URL = 'https://5tzv6cx5-7088.asse.devtunnels.ms/api';
 
 var currentConversationId = null;
 var currentConversation = null;
@@ -158,7 +158,7 @@ document.addEventListener('play', function (e) {
 
 function initSignalR() {
     connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7088/chatHub", {
+        .withUrl("https://5tzv6cx5-7088.asse.devtunnels.ms/chatHub", {
             accessTokenFactory: () => token
         })
         .withAutomaticReconnect()

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="utf-8" />
@@ -41,6 +41,14 @@
                 var chatAvatar = User.FindFirst("AvatarUrl")?.Value;
                 var chatName = User.FindFirst("DisplayName")?.Value ?? User.Identity?.Name ?? "User";
                 var chatInitial = !string.IsNullOrEmpty(chatName) ? chatName.Substring(0, 1).ToUpper() : "U";
+            }
+
+            @if (User.IsInRole("Admin"))
+            {
+                <!-- Admin Dashboard (Admin only) -->
+                <a asp-controller="Admin" asp-action="Dashboard" class="btn-nav-ghost d-none d-sm-inline-flex align-items-center gap-1" title="Admin Dashboard" style="font-size:0.82rem;padding:5px 10px;color:#a5b4fc;border:1px solid rgba(165,180,252,0.3);">
+                    <span>👑 Admin</span>
+                </a>
             }
 
             <!-- Profile button (desktop only) -->
